@@ -11,6 +11,9 @@
 <script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 <!--Import FeatherIcons CDN Javascript -->
 <script src="//cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<!--Import List.js CDN Javascript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
 
 <!--Let browser know the pages' social appearance -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,35 +28,28 @@
 
 <!-- Load Custom CSS -->
 <style>
-
 a {
 	outline: 0;
 	color: #ee6e73;
 }
-
 body {
 	font-family: 'Lato', sans-serif;
 	color: rgba(0,0,0,0.87);
 }
-
 h4 {
 	font-weight: 900;
 	color: #fff;
 }
-
 nav {
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
-
-
 .newest-tool-name,
 .favorites-tool-name,
 .popular-tool-name,
 .toast {
 	font-weight: 600;
 }
-
 a.newest-tool-like,
 a.favorites-tool-like,
 a.popular-tool-like,
@@ -62,7 +58,6 @@ a.favorites-tool-love,
 a.popular-tool-love {
 	color: rgba(0,0,0,0.87);
 }
-
 a.newest-tool-like:hover,
 a.favorites-tool-like:hover,
 a.popular-tool-like:hover,
@@ -73,7 +68,6 @@ a.popular-tool-love:hover {
 	animation: transform 0.5s;
 	transform: scale(1.05);
 }
-
 .newest-tool-icon,
 .favorites-tool-icon,
 .popular-tool-name  {
@@ -81,11 +75,9 @@ a.popular-tool-love:hover {
 	margin: 0 0.50rem 0 0;
 	background: white;
 }
-
 .icon-active {
 	color: #f44336 !important;
 }
-
 #newest,
 #popular,
 #favorites {
@@ -93,45 +85,36 @@ a.popular-tool-love:hover {
 	padding-right: 0.5rem;
 	padding-left: 0.5rem;		
 }
-
 #newest,
 #popular,
 #favorites > .row {
 	padding-bottom: 0.1rem;		
 }
-
 .hidden {
 	display: none !important;
 }
-
 #logout-icon {
 	padding: 0;
 	color: grey;
 }
-
 #nav-mobile {
 	height: 100%
 }
-
 .collection {
 	margin: 0 0 1rem 0 !important;
 	border: 1px #eee solid !important;
 }
-
 .collection .collection-item {
 	padding: 20px 20px !important;
     background-color: #fff !important;	
 }
-
 .collection a.collection-item {
 	color: #E57373 !important;
 }
-
 .collection .collection-item.active {
     background-color: #E57373 !important;
     color: #fff !important;
 }
-
 </style>
 
 <!--Load Pipz tracker-->
@@ -169,7 +152,6 @@ firebase.analytics();
 firebase.auth();
 firebase.database();
 firebase.firestore();
-
 </script>
 
 <div class="container">
@@ -285,9 +267,15 @@ firebase.firestore();
 		<li id="favorites-tab" class="tab col s3 disabled"><a class="grey-text" href="#favorites">Favoritos</a></li>
 		<li id="popular-tab" class="tab col s3 disabled"><a class="grey-text" href="#popular">Populares</a></li>
 	</ul -->
-	<div id ="newest" class="section white list-view"></div>
-	<div id ="popular" class="section white list-view"></div>
-	<div id ="favorites" class="section white list-view"></div>
+	<div id="newest-list">
+		<ul id ="newest" class="section white list-view list"></ul>
+	</div>
+	<div id="popular-list">
+		<ul id ="popular" class="section white list-view"></ul>
+	</div>
+	<div id ="favorites-list">
+		<ul id ="favorites" class="section white list-view"></ul>
+	</div>
 	<div id ="loader" class="section hidden">
 		<div class="progress grey lighten-2">
 			<div class="indeterminate red  lighten-3"></div>
@@ -297,7 +285,6 @@ firebase.firestore();
 </div>
 
 <!--div id ="product" class="section white">
-
 	<div class="row">
 		<div class="row valign-wrapper">
 			<form id="form">
@@ -326,7 +313,6 @@ firebase.firestore();
 			</form>
 		</div>
 	</div>
-
 </div-->
 
 
@@ -335,37 +321,29 @@ firebase.firestore();
 <button class="btn waves-effect waves-light grey white-text text-darken-4" onclick="signOut()" type="button">Fazer Logout</button-->
 
 <script type="text/javascript">
-
 var db = firebase.firestore();
-
 var cacheTools = [],
 	cacheStack = [],
 	cacheFavorite = [],
 	cachePopular = [],
-
 	cacheToolObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
 	cacheStackObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
 	cacheFavoriteObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
 	cachePopularObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},	
-
 	tId = [], tName = [], tDesc = [], tCat = [], tWebsite = [], tIcon = [],
 	sId = [], sName = [], sDesc = [], sCat = [], sWebsite = [], sIcon = [],
 	fId = [], fName = [], fDesc = [], fCat = [], fWebsite = [], fIcon = [],
 	pId = [], pName = [], pDesc = [], pCat = [], pWebsite = [], pIcon = [],
 	uLikes = [], uFavorites = [],
 	instance;
-
-
 function prevDef(event){
 	event.preventDefault();
 }
-
 function addHandlers() {
 	for (var i = document.getElementsByTagName('a').length - 1; i >= 0; i--) {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
 	}
 }
-
 function manageLoader() {
 	getId('loader').classList.toggle('hidden');
 	getId('newest').classList.toggle('hidden');
@@ -373,35 +351,28 @@ function manageLoader() {
 	getId('popular').classList.toggle('hidden');
 	return;
 }
-
 function manageViews(view) {
 	for (var i = getClass('list-view').length - 1; i >= 0; i--) {
 		getClass('list-view')[i].classList.add('hidden');
 		getClass('filter')[i].classList.remove('active');
 	}
-
 	getId(view).classList.toggle('hidden');
 	getId(view + '-filter').classList.add('active');
 }
-
 function getProfilePicUrl() {
 	return firebase.auth().currentUser.photoURL || '/shared/112/files/chs_google_icon.png';
 }
-
 function getUserName() {
 	return firebase.auth().currentUser.displayName;
 }
-
 function signIn() {
 	var provider = new firebase.auth.GoogleAuthProvider();
 	firebase.auth().signInWithPopup(provider);
 }
-
 function signOut() {
 	firebase.auth().signOut();
 	getId('logout-icon').classList.toggle('hidden');
 }
-
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		M.toast({html: 'Usuário conectado com sucesso.', classes: 'white blue-text lighten-2'})
@@ -419,20 +390,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
 	}
 });
-
 function isUserSignedIn() {
 	return !!firebase.auth().currentUser;
 }
-
 function loadFavorites() {
-
 	manageViews('favorites');
 	// manageLoader();
 	cachedFavorites = fId;
 	fId = [];
-
 	if (isUserSignedIn() == true) {
-
 		db.collection("tools").orderBy("id").get()
 			.then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
@@ -452,44 +418,31 @@ function loadFavorites() {
 		M.toast({html: 'Você precisa estar online! (loadFavorites)', classes: 'white blue-text lighten-2'})
 	}
 }
-
 function loadNewest() {
-
 	manageViews('newest');
 	// manageLoader();
 	cachedNewest = sId;
 	sId = [];
-
 	if (!cachedNewest) {
 		db.collection("tools").orderBy("id").get().then((querySnapshot) => {
-
 			querySnapshot.forEach((doc) => {
 				sId.push(doc.id);
 				console.log(`${doc.id} => ${doc.data()}`);
 				});
-
 					createStructures(sId);
-
 			});
 	}
-
 	for (var i = getId('newest').getElementsByClassName('row').length - 1; i > 0; i--) {
 		getId('newest-love-' + i).classList.remove('icon-active');
 	}
-
 	getLikesAndFavorites(sId, 'newest');
-
 }
-
 function userLoveProduct() {
-
 if (isUserSignedIn() == true) {
-
 	var lovedId = parseInt(this.getAttribute('data-id'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLoves;
-
 	if (uFavorites == undefined) {
 		uFavorites.push(lovedId);
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
@@ -504,7 +457,6 @@ if (isUserSignedIn() == true) {
 	} else {
 		var alreadyLoves = uFavorites.find(function(product) { return product == lovedId });
 	}
-
 	if (alreadyLoves == undefined) {
 		uFavorites.push(lovedId);
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
@@ -519,7 +471,6 @@ if (isUserSignedIn() == true) {
 	} else {
 		var index = uFavorites.indexOf(lovedId);
 			uFavorites.splice(index, 1);
-
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
 			favorites: uFavorites
 		}).then(function(docRef) {
@@ -534,16 +485,12 @@ if (isUserSignedIn() == true) {
 	M.toast({html: 'Você precisa estar online! (userLoveProduct)', classes: 'white blue-text lighten-2'})
 }
 }
-
 function userLikeProduct() {
-
 if (isUserSignedIn() == true) {
-
 	var likedId = parseInt(this.getAttribute('data-id'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLikes;
-
 	if (uLikes == undefined) {
 		uLikes.push(likedId);
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
@@ -558,7 +505,6 @@ if (isUserSignedIn() == true) {
 	} else {
 		var alreadyLikes = uLikes.find(function(product) { return product == id	});
 	}
-
 	if (alreadyLikes == undefined) {
 		uLikes.push(likedId);
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
@@ -573,7 +519,6 @@ if (isUserSignedIn() == true) {
 	} else {
 		var index = uLikes.indexOf(likedId);
 			uLikes.splice(index, 1);
-
 		db.collection("users").doc(firebase.auth().currentUser.uid).update({
 			likes: uLikes
 		}).then(function(docRef) {
@@ -588,34 +533,24 @@ if (isUserSignedIn() == true) {
 	M.toast({html: 'Você precisa estar online! (userLikeProduct)', classes: 'white blue-text lighten-2'})
 }
 }
-
 function getLikesAndFavorites(context, id) {
-
 if (isUserSignedIn() == true) {
-
 var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
-
 	userData.get().then(function(doc) {
-
 		if (doc.exists) {
 			console.log("Document data:", doc.data());
-
 			uLikes = doc.data().likes;
 			uFavorites = doc.data().favorites;
-
 		} else {
-
 			userData.set({
 				likes: [],
 				favorites: []
 		}).then(function(docRef) {
 //			console.log("Document data: ", doc.data());
 	M.toast({html: 'Conta criada e conectada com sucesso!', classes: 'white blue-text lighten-2'});
-
 		}).catch(function(error) {
 			console.log("Error setting document:", error);
 		});
-
 		}
 	}).then(function() {
 		if (uLikes) {
@@ -634,14 +569,10 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 } else {
 	console.log('User is not logged in.')	
 }
-
 	// manageLoader(); //Show loaded content
 }
-
 function addProduct() {
-
 var db = firebase.firestore();
-
 var toolId = getId('id').value;
 var toolName = getId('name').value;
 var toolDescription = getId('description').value;
@@ -649,7 +580,6 @@ var toolIcon = getId('icon').value;
 var toolWebsite = getId('website').value;
 var toolCategories = getId('categories').value;
 var toolTags = getId('tags').value;					
-
 db.collection("tools").add({
 	id: parseInt(toolId),
 	name: toolName,
@@ -665,95 +595,68 @@ db.collection("tools").add({
 .catch(function(error) {
 	console.error("Error adding document: ", error);
 });
-
 }
-
 function getClass(identifier) {
 	var el = document.getElementsByClassName(identifier);
 	return el;
 }
-
 function getId(identifier) {
 	var el = document.getElementById(identifier);
 	return el;
 }
-
 function newEl(element_type, css) {
-
 var el = document.createElement(element_type);
-
 if (css) {
 	for (i = 0; i <= css.length - 1; i++) {
 		el.classList.add(css[i]);
 	}
 }
-
 return el;
 }
-
-
 function fillStructures(context, id) {
-
 	console.log(id);
-
 	if (cacheTools.length != 0) {
-
 		for (var i = context.length - 1; i >= 0; i--) {
 			getClass(id + '-tool-icon')[i].src = cacheTools[i].icon;
 			getClass(id + '-tool-name')[i].innerText = cacheTools[i].name;
 			getClass(id + '-tool-name')[i].setAttribute('href', cacheTools[i].website);
 			getClass(id + '-tool-description')[i].innerText = cacheTools[i].description;
 			getClass(id + '-tool-categories')[i].innerText = cacheTools[i].categories;
-
 	//			getClass(id + '-tool-like')[i].setAttribute('data-id', cacheTools[i].id);
 			getClass(id + '-tool-love')[i].setAttribute('data-id', cacheTools[i].id);					
 	//			getClass(id + '-tool-like')[i].setAttribute('id', id + '-like-' + cacheTools[i].id);
 			getClass(id + '-tool-love')[i].setAttribute('id', id + '-love-' + cacheTools[i].id);		
-
 	//			getClass(id + '-tool-like')[i].setAttribute('onclick', 'userLikeProduct(this)');
 	//			getClass(id + '-tool-love')[i].setAttribute('onclick', 'userLoveProduct(this)');
 		}
-
 	} else {
 		console.log('Data not loaded. Trying again in 1sec');
 		setTimeout(function() {
 			fillStructures(context, id);
 		}, 1000);
 	}
-
 		getLikesAndFavorites(context, id);
 }
-
 function getStack(context, id) {
-
 console.log('function getStack() called. context: ' + context + ", id: " + id);
-
 switch (id) {
 	case "newest":
 		cache = cacheStack;
 	break;
-
 	case "favorites":
 		cache = cacheFavorite;
 	break;
-
 	case "popular":
 		cache = cachePopular;
 	break;
-
 	default:
 }
-
 cacheTools = [];
-
 for (var i = context.length - 1; i >= 0; i--) {
-
 	var tools = db.collection("tools").doc(context[i]);
-
 	tools.get().then(function(doc) {
 		if (doc.exists) {
 			console.log("Document data:", doc.data());
-
 			var cacheToolObj = new Object();
 				cacheToolObj.id = doc.data().id;
 				cacheToolObj.name = doc.data().name;
@@ -761,9 +664,7 @@ for (var i = context.length - 1; i >= 0; i--) {
 				cacheToolObj.categories = doc.data().categories;
 				cacheToolObj.website = doc.data().website;
 				cacheToolObj.icon = doc.data().icon;
-
 			cacheTools.push(cacheToolObj);
-
 //	        tId.push(doc.data().id);
 //	        tName.push(doc.data().name);
 //			tDesc.push(doc.data().description);
@@ -772,7 +673,6 @@ for (var i = context.length - 1; i >= 0; i--) {
 //			tIcon.push(doc.data().icon);
 //				console.log('function fillStructures() being called. id:' + doc.data().id);
 //				fillStructures(doc.data().id);
-
 		} else {
 			// doc.data() will be undefined in this case
 			console.log("No such document!");
@@ -780,145 +680,108 @@ for (var i = context.length - 1; i >= 0; i--) {
 	}).catch(function(error) {
 		console.log("Error getting document:", error);
 	});
-
 	console.log('stack product number ' + i + ' created.');
-
 	}
-
 	console.log('all stack structures created.');
-
 	fillStructures(context, id);
 }
-
 function createStructures(context) {
-
 // manageLoader(); // Hide while loading.
-
 var tabId;
 console.log(context);
-
 switch (context) {
 	case sId:
 		tabId = "newest";
 	break;
-
 	case fId:
 		tabId = "favorites";
 	break;
-
 	case pId:
 		tabId = "popular";
 	break;
-
 	default:
 }
-
 for (var i = context.length - 1; i >= 0; i--) {
-
 	console.log('context length: ' + context.length);
 	console.log('current iteration: ' + i);
-
 		var stackList = getId(tabId),
-			newStackRow = newEl('div', ['row', 'valign-wrapper']);
-
+			newStackRow = newEl('li', ['row', 'valign-wrapper']);
 			stackList.appendChild(newStackRow);
-
 		var newNameCol = newEl('div', ['col' , 'l2', 's6', 'valign-wrapper']),
 			newNameEl = newEl('a', [tabId + '-tool-name']),
 			newIconEl = newEl('img', ['left', tabId + '-tool-icon']); //circle
-
 		newStackRow.appendChild(newNameCol);
 		newNameCol.appendChild(newIconEl);
 		newNameCol.appendChild(newNameEl);
-
 		var newDescriptionCol = newEl('div', ['col', 'l7', 'hide-on-small-only']),
 			newDescriptionEl = newEl('p', [tabId + '-tool-description', 'truncate']);
-
 		newStackRow.appendChild(newDescriptionCol);
 		newDescriptionCol.appendChild(newDescriptionEl);
-
 		var newCategoryCol = newEl('div', ['col' , 'l2', 's4']),
 			newCategoryEl = newEl('p', [tabId + '-tool-categories']);
-
 		newStackRow.appendChild(newCategoryCol);
 		newCategoryCol.appendChild(newCategoryEl);
-
 		var newActionsCol = newEl('div', ['col', 'l1', 's2', 'center-align']),
 //				newLikeEl = newEl('a', [tabId + '-tool-like']),
 			newLoveEl = newEl('a', [tabId + '-tool-love']),
 //				newLikeIconEl = newEl('i'),
 			newLoveIconEl = newEl('i');
-
 		newStackRow.appendChild(newActionsCol);
 //			newActionsCol.appendChild(newLikeEl);
 		newActionsCol.appendChild(newLoveEl);
-
 //			newLikeIconEl.setAttribute('data-feather', 'thumbs-up');
 		newLoveIconEl.setAttribute('data-feather', 'heart');
-
 //			newLikeEl.addEventListener('click', userLikeProduct);
 		newLoveEl.addEventListener('click', userLoveProduct);
-
-
 //			newLikeEl.appendChild(newLikeIconEl);
 		newLoveEl.appendChild(newLoveIconEl);
-
 		feather.replace({ width: 24, height: 24})
-
 		console.log('structure number ' + i + ' created.');
 }
-
 		console.log('all ' + i + ' structures created.');
 		console.log('calling function to fill structures.');			
 		getStack(context, tabId);
 }
-
 function destroyStructures(context) {
-
 	var TabId;
-
 	switch (context) {
 		case sId:
 			tabId = "newest";
 		break;
-
 		case fId:
 			tabId = "favorites";
 		break;
-
 		case pId:
 			tabId = "popular";
 		break;
-
 		default:
 	}
-
 	for (var i = getId(TabId).getElementsByClassName('row').length - 1; i >= 0; i--) {
 		getId(TabId).getElementsByClassName('row')[i].remove();
 	}
-
 	return;
 }
-
 window.addEventListener('DOMContentLoaded', function() {
-
 	var db = firebase.firestore();
 	instance = M.Tabs.init(getClass('tabs')[0]);
 	manageViews('newest');
 	addHandlers();
 
-	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
+	var options = {
+		valueNames: [ 'newest-tool-name', 'newest-tool-description', 'newest-tool-categories']
+	};
 
+	var toolList = new List('newest-list', options);
+
+	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			sId.push(doc.id);
 			console.log(`${doc.id} => ${doc.data()}`);
 			});
 			createStructures(sId);
 	});
+
 });
-
-
-
 </script>
 
 
