@@ -83,7 +83,8 @@ a.popular-tool-love:hover {
 #favorites {
 	border: 1px #eee solid;
 	padding-right: 0.5rem;
-	padding-left: 0.5rem;		
+	padding-left: 0.5rem;
+	margin: 0 0 !important;		
 }
 #newest,
 #popular,
@@ -227,31 +228,31 @@ firebase.firestore();
 		  	<li class="collection-item">
 			Categorias
 			</li>
-			<a href="/" class="collection-item red-text text-lighten-2">
+			<a href="/" data-filter="Análise" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">insert_chart</i>
 				</div>
 			Análise
 			</a>
-			<a href="/" class="collection-item red-text text-lighten-2">
+			<a href="/" data-filter="Insights" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
-			<a href="/" class="collection-item red-text text-lighten-2">
+			<a href="/" data-filter="Processos" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">settings</i>
 				</div>
 			Processos
 			</a>
-			<a href="/" class="collection-item red-text text-lighten-2">
+			<a href="/" data-filter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
-			<a href="/" class="collection-item red-text lighten-2">
+			<a href="/" data-filter="SEO" class="collection-item category-filter red-text lighten-2">
 				<div class="col s2">
 					<i class="material-icons">search</i>
 				</div>
@@ -269,6 +270,7 @@ firebase.firestore();
 	</ul -->
 	<div id="newest-list">
 		<ul id ="newest" class="section white list-view list"></ul>
+		<ul class="pagination center-align"></ul>
 	</div>
 	<div id="popular-list">
 		<ul id ="popular" class="section white list-view"></ul>
@@ -278,7 +280,7 @@ firebase.firestore();
 	</div>
 	<div id ="loader" class="section hidden">
 		<div class="progress grey lighten-2">
-			<div class="indeterminate red  lighten-3"></div>
+			<div class="indeterminate red lighten-3"></div>
 		</div>
 	</div>
 	</div>
@@ -326,10 +328,10 @@ var cacheTools = [],
 	cacheStack = [],
 	cacheFavorite = [],
 	cachePopular = [],
-	cacheToolObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
-	cacheStackObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
-	cacheFavoriteObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},
-	cachePopularObj = {id: '', name: '', description: '', categories: '', website: '', icon: ''},	
+	cacheToolObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cacheStackObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cacheFavoriteObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cachePopularObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},	
 	tId = [], tName = [], tDesc = [], tCat = [], tWebsite = [], tIcon = [],
 	sId = [], sName = [], sDesc = [], sCat = [], sWebsite = [], sIcon = [],
 	fId = [], fName = [], fDesc = [], fCat = [], fWebsite = [], fIcon = [],
@@ -342,6 +344,10 @@ function prevDef(event){
 function addHandlers() {
 	for (var i = document.getElementsByTagName('a').length - 1; i >= 0; i--) {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
+	}
+
+	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
+		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
 	}
 }
 function manageLoader() {
@@ -534,6 +540,7 @@ if (isUserSignedIn() == true) {
 }
 }
 function getLikesAndFavorites(context, id) {
+
 if (isUserSignedIn() == true) {
 var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 	userData.get().then(function(doc) {
@@ -553,6 +560,7 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		});
 		}
 	}).then(function() {
+
 		if (uLikes) {
 			for (var i = uLikes.length - 1; i >= 0; i--) {
 				getId(id + '-like-' + uLikes[i]).classList.toggle('icon-active');
@@ -561,13 +569,21 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		if (uFavorites) {
 			for (var i = uFavorites.length - 1; i >= 0; i--) {
 				getId(id + '-love-' + uFavorites[i]).classList.toggle('icon-active');
+
+				for (var y = cacheTools.length - 1; y >= 0; y--) {
+					if (cacheTools[y].id == uFavorites[i]) {
+						cacheTools[y].userfavorite = true;
+						console.log(cacheTools[y]);
+					}
+				}
 			}
 		}
+
 	}).catch(function(error) {
 		console.log("Error getting document:", error);
 	})
 } else {
-	console.log('User is not logged in.')	
+	console.log('User is not logged in.')
 }
 	// manageLoader(); //Show loaded content
 }
@@ -636,54 +652,70 @@ function fillStructures(context, id) {
 		}, 1000);
 	}
 		getLikesAndFavorites(context, id);
+
 }
-function getStack(context, id) {
-console.log('function getStack() called. context: ' + context + ", id: " + id);
-switch (id) {
-	case "newest":
-		cache = cacheStack;
-	break;
-	case "favorites":
-		cache = cacheFavorite;
-	break;
-	case "popular":
-		cache = cachePopular;
-	break;
-	default:
-}
-cacheTools = [];
-for (var i = context.length - 1; i >= 0; i--) {
-	var tools = db.collection("tools").doc(context[i]);
-	tools.get().then(function(doc) {
-		if (doc.exists) {
-			console.log("Document data:", doc.data());
-			var cacheToolObj = new Object();
-				cacheToolObj.id = doc.data().id;
-				cacheToolObj.name = doc.data().name;
-				cacheToolObj.description = doc.data().description;
-				cacheToolObj.categories = doc.data().categories;
-				cacheToolObj.website = doc.data().website;
-				cacheToolObj.icon = doc.data().icon;
-			cacheTools.push(cacheToolObj);
-//	        tId.push(doc.data().id);
-//	        tName.push(doc.data().name);
-//			tDesc.push(doc.data().description);
-//			tCat.push(doc.data().categories);
-//			tWebsite.push(doc.data().website);
-//			tIcon.push(doc.data().icon);
-//				console.log('function fillStructures() being called. id:' + doc.data().id);
-//				fillStructures(doc.data().id);
+
+function filterCategory() {
+	listObj.filter(function(item) {
+		if (item.values()['newest-tool-categories'] == this.getAttribute('data-filter')) {
+			console.log("true");
+			return true;
 		} else {
-			// doc.data() will be undefined in this case
-			console.log("No such document!");
+			console.log("false");
+			return false;
 		}
-	}).catch(function(error) {
-		console.log("Error getting document:", error);
 	});
-	console.log('stack product number ' + i + ' created.');
+}
+
+function getStack(context, id) {
+	console.log('function getStack() called. context: ' + context + ", id: " + id);
+	switch (id) {
+		case "newest":
+			cache = cacheStack;
+		break;
+		case "favorites":
+			cache = cacheFavorite;
+		break;
+		case "popular":
+			cache = cachePopular;
+		break;
+		default:
 	}
-	console.log('all stack structures created.');
-	fillStructures(context, id);
+
+	cacheTools = [];
+	for (var i = context.length - 1; i >= 0; i--) {
+		var tools = db.collection("tools").doc(context[i]);
+		tools.get().then(function(doc) {
+			if (doc.exists) {
+				console.log("Document data:", doc.data());
+				var cacheToolObj = new Object();
+					cacheToolObj.id = doc.data().id;
+					cacheToolObj.name = doc.data().name;
+					cacheToolObj.description = doc.data().description;
+					cacheToolObj.categories = doc.data().categories;
+					cacheToolObj.website = doc.data().website;
+					cacheToolObj.icon = doc.data().icon;
+					cacheToolObj.userfavorite = false;
+				cacheTools.push(cacheToolObj);
+	//	        tId.push(doc.data().id);
+	//	        tName.push(doc.data().name);
+	//			tDesc.push(doc.data().description);
+	//			tCat.push(doc.data().categories);
+	//			tWebsite.push(doc.data().website);
+	//			tIcon.push(doc.data().icon);
+	//				console.log('function fillStructures() being called. id:' + doc.data().id);
+	//				fillStructures(doc.data().id);
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+		console.log('stack product number ' + i + ' created.');
+		}
+		console.log('all stack structures created.');
+		fillStructures(context, id);
 }
 function createStructures(context) {
 // manageLoader(); // Hide while loading.
@@ -705,15 +737,15 @@ for (var i = context.length - 1; i >= 0; i--) {
 	console.log('context length: ' + context.length);
 	console.log('current iteration: ' + i);
 		var stackList = getId(tabId),
-			newStackRow = newEl('li', ['row', 'valign-wrapper']);
+			newStackRow = newEl('li', ['valign-wrapper']);
 			stackList.appendChild(newStackRow);
-		var newNameCol = newEl('div', ['col' , 'l2', 's6', 'valign-wrapper']),
+		var newNameCol = newEl('div', ['col' , 'l4', 's6', 'valign-wrapper']),
 			newNameEl = newEl('a', [tabId + '-tool-name']),
 			newIconEl = newEl('img', ['left', tabId + '-tool-icon']); //circle
 		newStackRow.appendChild(newNameCol);
 		newNameCol.appendChild(newIconEl);
 		newNameCol.appendChild(newNameEl);
-		var newDescriptionCol = newEl('div', ['col', 'l7', 'hide-on-small-only']),
+		var newDescriptionCol = newEl('div', ['col', 'l5', 'hide-on-small-only']),
 			newDescriptionEl = newEl('p', [tabId + '-tool-description', 'truncate']);
 		newStackRow.appendChild(newDescriptionCol);
 		newDescriptionCol.appendChild(newDescriptionEl);
@@ -761,17 +793,12 @@ function destroyStructures(context) {
 	}
 	return;
 }
+
 window.addEventListener('DOMContentLoaded', function() {
 	var db = firebase.firestore();
 	instance = M.Tabs.init(getClass('tabs')[0]);
 	manageViews('newest');
 	addHandlers();
-
-	var options = {
-		valueNames: [ 'newest-tool-name', 'newest-tool-description', 'newest-tool-categories']
-	};
-
-	var toolList = new List('newest-list', options);
 
 	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
