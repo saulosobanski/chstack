@@ -345,7 +345,6 @@ function addHandlers() {
 	for (var i = document.getElementsByTagName('a').length - 1; i >= 0; i--) {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
 	}
-
 	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
 		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
 	}
@@ -540,7 +539,6 @@ if (isUserSignedIn() == true) {
 }
 }
 function getLikesAndFavorites(context, id) {
-
 if (isUserSignedIn() == true) {
 var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 	userData.get().then(function(doc) {
@@ -560,7 +558,6 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		});
 		}
 	}).then(function() {
-
 		if (uLikes) {
 			for (var i = uLikes.length - 1; i >= 0; i--) {
 				getId(id + '-like-' + uLikes[i]).classList.toggle('icon-active');
@@ -569,7 +566,6 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		if (uFavorites) {
 			for (var i = uFavorites.length - 1; i >= 0; i--) {
 				getId(id + '-love-' + uFavorites[i]).classList.toggle('icon-active');
-
 				for (var y = cacheTools.length - 1; y >= 0; y--) {
 					if (cacheTools[y].id == uFavorites[i]) {
 						cacheTools[y].userfavorite = true;
@@ -578,7 +574,6 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 				}
 			}
 		}
-
 	}).catch(function(error) {
 		console.log("Error getting document:", error);
 	})
@@ -652,12 +647,13 @@ function fillStructures(context, id) {
 		}, 1000);
 	}
 		getLikesAndFavorites(context, id);
-
 }
-
 function filterCategory() {
-	listObj.filter(function(item) {
-		if (item.values()['newest-tool-categories'] == this.getAttribute('data-filter')) {
+
+	filterQuery = this.getAttribute('data-filter');
+
+	toolList.filter(function(item) {
+		if (item.values()['newest-tool-categories'] == filterQuery) {
 			console.log("true");
 			return true;
 		} else {
@@ -666,7 +662,6 @@ function filterCategory() {
 		}
 	});
 }
-
 function getStack(context, id) {
 	console.log('function getStack() called. context: ' + context + ", id: " + id);
 	switch (id) {
@@ -681,7 +676,6 @@ function getStack(context, id) {
 		break;
 		default:
 	}
-
 	cacheTools = [];
 	for (var i = context.length - 1; i >= 0; i--) {
 		var tools = db.collection("tools").doc(context[i]);
@@ -793,13 +787,11 @@ function destroyStructures(context) {
 	}
 	return;
 }
-
 window.addEventListener('DOMContentLoaded', function() {
 	var db = firebase.firestore();
 	instance = M.Tabs.init(getClass('tabs')[0]);
 	manageViews('newest');
 	addHandlers();
-
 	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			sId.push(doc.id);
@@ -807,7 +799,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			});
 			createStructures(sId);
 	});
-
 });
 </script>
 
@@ -816,3 +807,13 @@ window.addEventListener('DOMContentLoaded', function() {
 <!--Compiled and minified JavaScript at end of body for optimized loading-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>
+
+<!--
+
+	var options = {
+    valueNames: [ 'newest-tool-name', 'newest-tool-category' ]
+};
+
+var toolList = new List('newest-list', options);
+
+-->
