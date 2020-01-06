@@ -652,6 +652,10 @@ function fillStructures(context, id) {
 			fillStructures(context, id);
 		}, 1000);
 	}
+
+		var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
+		var toolList = new List('newest-list', options); //Build list.js
+
 		getLikesAndFavorites(context, id);
 }
 function filterCategory() {
@@ -793,14 +797,12 @@ function destroyStructures(context) {
 	}
 	return;
 }
+
 window.addEventListener('DOMContentLoaded', function() {
 	var db = firebase.firestore();
 	instance = M.Tabs.init(getClass('tabs')[0]);
 	manageViews('newest');
 	addHandlers();
-
-	var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
-	var toolList = new List('newest-list', options);
 
 	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
