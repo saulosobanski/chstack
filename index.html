@@ -404,6 +404,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 function isUserSignedIn() {
 	return !!firebase.auth().currentUser;
 }
+
+function buildList() {
+	var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
+	var toolList = new List('newest-list', options); //Build list.js
+	console.log('List created.');
+	return
+}
+
 function loadFavorites() {
 	manageViews('favorites');
 	// manageLoader();
@@ -652,10 +660,7 @@ function fillStructures(context, id) {
 			fillStructures(context, id);
 		}, 1000);
 	}
-
-		var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
-		var toolList = new List('newest-list', options); //Build list.js
-
+		buildList();
 		getLikesAndFavorites(context, id);
 }
 function filterCategory() {
