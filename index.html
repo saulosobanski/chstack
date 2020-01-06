@@ -106,7 +106,7 @@ a.popular-tool-love:hover {
 	border: 1px #eee solid !important;
 }
 .collection .collection-item {
-	padding: 20px 20px !important;
+	padding: 13px 20px !important;
     background-color: #fff !important;	
 }
 .collection a.collection-item {
@@ -115,6 +115,10 @@ a.popular-tool-love:hover {
 .collection .collection-item.active {
     background-color: #E57373 !important;
     color: #fff !important;
+}
+
+.collection .collection-item span {
+
 }
 </style>
 
@@ -197,12 +201,14 @@ firebase.firestore();
 		    		<i class="material-icons">favorite_border</i>
 		    	</div>
 		    	Favoritos
+		    	<span data-badge-caption="Em Breve" class="new badge grey lighten-1"></span>
 		    </a>
 		    <a href="#popular" id="popular-filter" class="filter collection-item red-text text-lighten-2">
 		    	<div class="col s2">
 		    		<i class="material-icons">show_chart</i>
 		    	</div>
 		    	Populares
+		    	<span data-badge-caption="Em Breve" class="new badge grey lighten-1"></span>
 		    </a>
 		</div>
 
@@ -792,6 +798,10 @@ window.addEventListener('DOMContentLoaded', function() {
 	instance = M.Tabs.init(getClass('tabs')[0]);
 	manageViews('newest');
 	addHandlers();
+
+	var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
+	var toolList = new List('newest-list', options);
+
 	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			sId.push(doc.id);
@@ -811,7 +821,7 @@ window.addEventListener('DOMContentLoaded', function() {
 <!--
 
 	var options = {
-    valueNames: [ 'newest-tool-name', 'newest-tool-category' ]
+    valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]
 };
 
 var toolList = new List('newest-list', options);
