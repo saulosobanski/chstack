@@ -191,20 +191,20 @@ firebase.firestore();
 
 		<div class="collection">
 		    <a href="#newest" id="newest-filter" class="filter collection-item active">
-		    	<div class="col s2">
+		    	<div class="col s3">
 		    		<i class="material-icons">schedule</i>
 		    	</div>
 		    	Novidades
 		    </a>
 		    <a href="#favorites" id="favorites-filter" class="filter collection-item red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 		    		<i class="material-icons">favorite_border</i>
 		    	</div>
 		    	Favoritos
 		    	<span data-badge-caption="Em Breve" class="new badge grey lighten-1"></span>
 		    </a>
 		    <a href="#popular" id="popular-filter" class="filter collection-item red-text text-lighten-2">
-		    	<div class="col s2">
+		    	<div class="col s3">
 		    		<i class="material-icons">show_chart</i>
 		    	</div>
 		    	Populares
@@ -217,13 +217,13 @@ firebase.firestore();
 			Tags
 			</li>
 			<a href="/" class="collection-item red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">attach_money</i>
 				</div>
 			Pagas
 			</a>
 			<a href="/" class="collection-item red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">money_off</i>
 				</div>
 			Gratuitas
@@ -235,31 +235,31 @@ firebase.firestore();
 			Categorias
 			</li>
 			<a href="/" data-filter="Análise" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">insert_chart</i>
 				</div>
 			Análise
 			</a>
 			<a href="/" data-filter="Insights" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
 			<a href="/" data-filter="Processos" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">settings</i>
 				</div>
 			Processos
 			</a>
 			<a href="/" data-filter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
 			<a href="/" data-filter="SEO" class="collection-item category-filter red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">search</i>
 				</div>
 			SEO
@@ -371,7 +371,7 @@ function manageViews(view) {
 	getId(view + '-filter').classList.add('active');
 }
 function getProfilePicUrl() {
-	return firebase.auth().currentUser.photoURL || '/shared/112/files/chs_google_icon.png';
+	return firebase.auth().currentUser.photoURL || '//pipz.io/shared/112/files/chs_google_icon.png';
 }
 function getUserName() {
 	return firebase.auth().currentUser.displayName;
