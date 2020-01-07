@@ -172,7 +172,7 @@ firebase.firestore();
 					<img id="user-image" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
 					<span id="user-name"></span>
 					<svg id="logout-icon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<use xlink:href="/shared/112/files/feather_sprite.svg#logout"/>
+						<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
 					</svg>
 				</div>
 			</ul>
@@ -399,7 +399,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		getLikesAndFavorites();
 	} else {
 		M.toast({html: 'Faça login para salvar suas preferências. (onAuthStateChanged)', classes: 'white blue-text lighten-2'})
-		getId('user-image').src = "/shared/112/files/chs_google_icon.png";
+		getId('user-image').src = "//pipz.io/shared/112/files/chs_google_icon.png";
 		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
 	}
 });
