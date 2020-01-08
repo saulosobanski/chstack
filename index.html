@@ -1,7 +1,7 @@
 <html>
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 <meta charset="utf-8" /> 
-<!--Import Google Icon & Text Fonts-->
+<!-Import Google Icon & Text Fonts-->
 <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:400,400i|IBM+Plex+Sans:100,100i,400,400i,700,700i|Material+Icons|Open+Sans|Lato&display=swap" rel="stylesheet"> 
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -9,9 +9,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <!-- Compiled and minified JQuery -->
 <script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
-<!--Import FeatherIcons CDN Javascript -->
-<script src="//cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-<!--Import List.js CDN Javascript -->
+<!-Import FeatherIcons CDN Javascript -->
+<script src="//cdn.jsdelivr.net/npm/featherIcons/dist/feather.min.js"></script>
+<!-Import List.js CDN Javascript -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
 
@@ -44,33 +44,33 @@ nav {
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
-.newest-tool-name,
-.favorites-tool-name,
-.popular-tool-name,
+.newestToolName,
+.favoritesToolName,
+.popularToolName,
 .toast {
 	font-weight: 600;
 }
-a.newest-tool-like,
-a.favorites-tool-like,
-a.popular-tool-like,
-a.newest-tool-love,
-a.favorites-tool-love,
-a.popular-tool-love {
+a.newestToolLike,
+a.favoritesToolLike,
+a.popularToolLike,
+a.newestToolLove,
+a.favoritesToolLove,
+a.popularToolLove {
 	color: rgba(0,0,0,0.87);
 }
-a.newest-tool-like:hover,
-a.favorites-tool-like:hover,
-a.popular-tool-like:hover,
-a.newest-tool-love:hover,
-a.favorites-tool-love:hover,
-a.popular-tool-love:hover {
+a.newestToolLike:hover,
+a.favoritesToolLike:hover,
+a.popularToolLike:hover,
+a.newestToolLove:hover,
+a.favoritesToolLove:hover,
+a.popularToolLove:hover {
 	cursor: pointer;
 	animation: transform 0.5s;
 	transform: scale(1.05);
 }
-.newest-tool-icon,
-.favorites-tool-icon,
-.popular-tool-name  {
+.newestToolIcon,
+.favoritesToolIcon,
+.popularToolName  {
 	width: 20px;
 	margin: 0 0.50rem 0 0;
 	background: white;
@@ -94,7 +94,7 @@ a.popular-tool-love:hover {
 .hidden {
 	display: none !important;
 }
-#logout-icon {
+#logoutIcon {
 	padding: 0;
 	color: grey;
 }
@@ -105,20 +105,16 @@ a.popular-tool-love:hover {
 	margin: 0 0 1rem 0 !important;
 	border: 1px #eee solid !important;
 }
-.collection .collection-item {
-	padding: 13px 20px !important;
+.collection .collectionItem {
+	padding: 20px 20px !important;
     background-color: #fff !important;	
 }
-.collection a.collection-item {
+.collection a.collectionItem {
 	color: #E57373 !important;
 }
-.collection .collection-item.active {
+.collection .collectionItem.active {
     background-color: #E57373 !important;
     color: #fff !important;
-}
-
-.collection .collection-item span {
-
 }
 </style>
 
@@ -160,109 +156,105 @@ firebase.firestore();
 </script>
 
 <div class="container">
-	<nav class="row">
+	<nav>
 		<div class="nav-wrapper grey lighten-5">
 			<a href="/" class="brand-logo">
-				<div class="col s12">
-				<h4 class="grey-text text-darken-4">Content Marketing Stack</h4>
-				</div>
+				<h4 class="grey-text text-darken-4">ChStack</h4>
 			</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
 				<div class="chip">
-					<img id="user-image" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
+					<img id="userImage" src="/shared/112/files/chs_google_icon.png" alt="Contact Person">
 					<span id="user-name"></span>
-					<svg id="logout-icon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
+					<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<use xlink:href="/shared/112/files/feather_sprite.svg#logout"/>
 					</svg>
 				</div>
 			</ul>
 		</div>
 	</nav>
 
-<!-- div class="section">
+<div class="section">
 	<div class="row">
 		<div class="col s12">
 			<div class="white" style="height:200px"></div>
 		</div>
 	</div>
-</div -->
+</div>
 
 <div class="row">
 
 	<div class="col s4">
 
 		<div class="collection">
-		    <a href="#newest" id="newest-filter" class="filter collection-item active">
-		    	<div class="col s3">
-		    		<i class="material-icons">schedule</i>
+		    <a href="#newest" id="newest-filter" class="filter collectionItem active">
+		    	<div class="col s2">
+		    		<i class="materialIcons">schedule</i>
 		    	</div>
 		    	Novidades
 		    </a>
-		    <a href="#favorites" id="favorites-filter" class="filter collection-item red-text lighten-2">
-				<div class="col s3">
-		    		<i class="material-icons">favorite_border</i>
+		    <a href="#favorites" id="favorites-filter" class="filter collectionItem red-text lighten-2">
+				<div class="col s2">
+		    		<i class="materialIcons">favorite_border</i>
 		    	</div>
 		    	Favoritos
-		    	<span data-badge-caption="Em Breve" class="new badge grey lighten-1"></span>
 		    </a>
-		    <a href="#popular" id="popular-filter" class="filter collection-item red-text text-lighten-2">
-		    	<div class="col s3">
-		    		<i class="material-icons">show_chart</i>
+		    <a href="#popular" id="popular-filter" class="filter collectionItem red-text text-lighten-2">
+		    	<div class="col s2">
+		    		<i class="materialIcons">show_chart</i>
 		    	</div>
 		    	Populares
-		    	<span data-badge-caption="Em Breve" class="new badge grey lighten-1"></span>
 		    </a>
 		</div>
 
 		<ul class="collection">
-		  	<li class="collection-item">
+		  	<li class="collectionItem">
 			Tags
 			</li>
-			<a href="/" class="collection-item red-text lighten-2">
-				<div class="col s3">
-					<i class="material-icons">attach_money</i>
+			<a href="/" class="collectionItem red-text lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">attach_money</i>
 				</div>
 			Pagas
 			</a>
-			<a href="/" class="collection-item red-text text-lighten-2">
-				<div class="col s3">
-					<i class="material-icons">money_off</i>
+			<a href="/" class="collectionItem red-text text-lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">money_off</i>
 				</div>
 			Gratuitas
 			</a>
 		</ul>
 
 		<ul class="collection">
-		  	<li class="collection-item">
+		  	<li class="collectionItem">
 			Categorias
 			</li>
-			<a href="/" data-filter="Análise" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s3">
-					<i class="material-icons">insert_chart</i>
+			<a href="/" data-filter="Análise" class="collectionItem category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">insert_chart</i>
 				</div>
 			Análise
 			</a>
-			<a href="/" data-filter="Insights" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s3">
-					<i class="material-icons">lightbulb_outline</i>
+			<a href="/" data-filter="Insights" class="collectionItem category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
-			<a href="/" data-filter="Processos" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s3">
-					<i class="material-icons">settings</i>
+			<a href="/" data-filter="Processos" class="collectionItem category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">settings</i>
 				</div>
 			Processos
 			</a>
-			<a href="/" data-filter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s3">
-					<i class="material-icons">hourglass_empty</i>
+			<a href="/" data-filter="Produtividade" class="collectionItem category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
-			<a href="/" data-filter="SEO" class="collection-item category-filter red-text lighten-2">
-				<div class="col s3">
-					<i class="material-icons">search</i>
+			<a href="/" data-filter="SEO" class="collectionItem category-filter red-text lighten-2">
+				<div class="col s2">
+					<i class="materialIcons">search</i>
 				</div>
 			SEO
 			</a>
@@ -353,6 +345,7 @@ function addHandlers() {
 	for (var i = document.getElementsByTagName('a').length - 1; i >= 0; i--) {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
 	}
+
 	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
 		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
 	}
@@ -373,7 +366,7 @@ function manageViews(view) {
 	getId(view + '-filter').classList.add('active');
 }
 function getProfilePicUrl() {
-	return firebase.auth().currentUser.photoURL || '//pipz.io/shared/112/files/chs_google_icon.png';
+	return firebase.auth().currentUser.photoURL || '/shared/112/files/chs_google_icon.png';
 }
 function getUserName() {
 	return firebase.auth().currentUser.displayName;
@@ -384,36 +377,28 @@ function signIn() {
 }
 function signOut() {
 	firebase.auth().signOut();
-	getId('logout-icon').classList.toggle('hidden');
+	getId('logoutIcon').classList.toggle('hidden');
 }
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		M.toast({html: 'Usuário conectado com sucesso.', classes: 'white blue-text lighten-2'})
-		getId('user-image').src = getProfilePicUrl();
+		getId('userImage').src = getProfilePicUrl();
 		getId('user-name').innerText = getUserName();
 		getId('favorites-filter').addEventListener('click', loadFavorites);
 		getId('newest-filter').addEventListener('click', loadNewest);
-//		getId('logout-icon').classList.toggle('hidden');
-//		getId('logout-icon').addEventListener('click', signOut);
+//		getId('logoutIcon').classList.toggle('hidden');
+//		getId('logoutIcon').addEventListener('click', signOut);
 //		getId('favorites-filter').classList.toggle('disabled');
 		getLikesAndFavorites();
 	} else {
 		M.toast({html: 'Faça login para salvar suas preferências. (onAuthStateChanged)', classes: 'white blue-text lighten-2'})
-		getId('user-image').src = "//pipz.io/shared/112/files/chs_google_icon.png";
+		getId('userImage').src = "/shared/112/files/chs_google_icon.png";
 		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
 	}
 });
 function isUserSignedIn() {
 	return !!firebase.auth().currentUser;
 }
-
-function buildList() {
-	var options = {valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]};
-	var toolList = new List('newest-list', options); //Build list.js
-	console.log('List created.');
-	return
-}
-
 function loadFavorites() {
 	manageViews('favorites');
 	// manageLoader();
@@ -460,7 +445,7 @@ function loadNewest() {
 }
 function userLoveProduct() {
 if (isUserSignedIn() == true) {
-	var lovedId = parseInt(this.getAttribute('data-id'));
+	var lovedId = parseInt(this.getAttribute('dataId'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLoves;
@@ -508,7 +493,7 @@ if (isUserSignedIn() == true) {
 }
 function userLikeProduct() {
 if (isUserSignedIn() == true) {
-	var likedId = parseInt(this.getAttribute('data-id'));
+	var likedId = parseInt(this.getAttribute('dataId'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLikes;
@@ -555,6 +540,7 @@ if (isUserSignedIn() == true) {
 }
 }
 function getLikesAndFavorites(context, id) {
+
 if (isUserSignedIn() == true) {
 var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 	userData.get().then(function(doc) {
@@ -574,6 +560,7 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		});
 		}
 	}).then(function() {
+
 		if (uLikes) {
 			for (var i = uLikes.length - 1; i >= 0; i--) {
 				getId(id + '-like-' + uLikes[i]).classList.toggle('icon-active');
@@ -582,6 +569,7 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 		if (uFavorites) {
 			for (var i = uFavorites.length - 1; i >= 0; i--) {
 				getId(id + '-love-' + uFavorites[i]).classList.toggle('icon-active');
+
 				for (var y = cacheTools.length - 1; y >= 0; y--) {
 					if (cacheTools[y].id == uFavorites[i]) {
 						cacheTools[y].userfavorite = true;
@@ -590,6 +578,7 @@ var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
 				}
 			}
 		}
+
 	}).catch(function(error) {
 		console.log("Error getting document:", error);
 	})
@@ -644,17 +633,17 @@ function fillStructures(context, id) {
 	console.log(id);
 	if (cacheTools.length != 0) {
 		for (var i = context.length - 1; i >= 0; i--) {
-			getClass(id + '-tool-icon')[i].src = cacheTools[i].icon;
-			getClass(id + '-tool-name')[i].innerText = cacheTools[i].name;
-			getClass(id + '-tool-name')[i].setAttribute('href', cacheTools[i].website);
-			getClass(id + '-tool-description')[i].innerText = cacheTools[i].description;
-			getClass(id + '-tool-categories')[i].innerText = cacheTools[i].categories;
-	//			getClass(id + '-tool-like')[i].setAttribute('data-id', cacheTools[i].id);
-			getClass(id + '-tool-love')[i].setAttribute('data-id', cacheTools[i].id);					
-	//			getClass(id + '-tool-like')[i].setAttribute('id', id + '-like-' + cacheTools[i].id);
-			getClass(id + '-tool-love')[i].setAttribute('id', id + '-love-' + cacheTools[i].id);		
-	//			getClass(id + '-tool-like')[i].setAttribute('onclick', 'userLikeProduct(this)');
-	//			getClass(id + '-tool-love')[i].setAttribute('onclick', 'userLoveProduct(this)');
+			getClass(id + 'ToolIcon')[i].src = cacheTools[i].icon;
+			getClass(id + 'ToolName')[i].innerText = cacheTools[i].name;
+			getClass(id + 'ToolName')[i].setAttribute('href', cacheTools[i].website);
+			getClass(id + 'ToolDescription')[i].innerText = cacheTools[i].description;
+			getClass(id + 'ToolCategories')[i].innerText = cacheTools[i].categories;
+	//			getClass(id + 'ToolLike')[i].setAttribute('dataId', cacheTools[i].id);
+			getClass(id + 'ToolLove')[i].setAttribute('dataId', cacheTools[i].id);					
+	//			getClass(id + 'ToolLike')[i].setAttribute('id', id + '-like-' + cacheTools[i].id);
+			getClass(id + 'ToolLove')[i].setAttribute('id', id + '-love-' + cacheTools[i].id);		
+	//			getClass(id + 'ToolLike')[i].setAttribute('onclick', 'userLikeProduct(this)');
+	//			getClass(id + 'ToolLove')[i].setAttribute('onclick', 'userLoveProduct(this)');
 		}
 	} else {
 		console.log('Data not loaded. Trying again in 1sec');
@@ -662,15 +651,13 @@ function fillStructures(context, id) {
 			fillStructures(context, id);
 		}, 1000);
 	}
-		buildList();
 		getLikesAndFavorites(context, id);
+
 }
+
 function filterCategory() {
-
-	filterQuery = this.getAttribute('data-filter');
-
-	toolList.filter(function(item) {
-		if (item.values()['newest-tool-categories'] == filterQuery) {
+	listObj.filter(function(item) {
+		if (item.values()['newestToolCategories'] == this.getAttribute('data-filter')) {
 			console.log("true");
 			return true;
 		} else {
@@ -679,6 +666,7 @@ function filterCategory() {
 		}
 	});
 }
+
 function getStack(context, id) {
 	console.log('function getStack() called. context: ' + context + ", id: " + id);
 	switch (id) {
@@ -693,6 +681,7 @@ function getStack(context, id) {
 		break;
 		default:
 	}
+
 	cacheTools = [];
 	for (var i = context.length - 1; i >= 0; i--) {
 		var tools = db.collection("tools").doc(context[i]);
@@ -751,22 +740,22 @@ for (var i = context.length - 1; i >= 0; i--) {
 			newStackRow = newEl('li', ['valign-wrapper']);
 			stackList.appendChild(newStackRow);
 		var newNameCol = newEl('div', ['col' , 'l4', 's6', 'valign-wrapper']),
-			newNameEl = newEl('a', [tabId + '-tool-name']),
-			newIconEl = newEl('img', ['left', tabId + '-tool-icon']); //circle
+			newNameEl = newEl('a', [tabId + 'ToolName']),
+			newIconEl = newEl('img', ['left', tabId + 'ToolIcon']); //circle
 		newStackRow.appendChild(newNameCol);
 		newNameCol.appendChild(newIconEl);
 		newNameCol.appendChild(newNameEl);
 		var newDescriptionCol = newEl('div', ['col', 'l5', 'hide-on-small-only']),
-			newDescriptionEl = newEl('p', [tabId + '-tool-description', 'truncate']);
+			newDescriptionEl = newEl('p', [tabId + 'ToolDescription', 'truncate']);
 		newStackRow.appendChild(newDescriptionCol);
 		newDescriptionCol.appendChild(newDescriptionEl);
 		var newCategoryCol = newEl('div', ['col' , 'l2', 's4']),
-			newCategoryEl = newEl('p', [tabId + '-tool-categories']);
+			newCategoryEl = newEl('p', [tabId + 'ToolCategories']);
 		newStackRow.appendChild(newCategoryCol);
 		newCategoryCol.appendChild(newCategoryEl);
 		var newActionsCol = newEl('div', ['col', 'l1', 's2', 'center-align']),
-//				newLikeEl = newEl('a', [tabId + '-tool-like']),
-			newLoveEl = newEl('a', [tabId + '-tool-love']),
+//				newLikeEl = newEl('a', [tabId + 'ToolLike']),
+			newLoveEl = newEl('a', [tabId + 'ToolLove']),
 //				newLikeIconEl = newEl('i'),
 			newLoveIconEl = newEl('i');
 		newStackRow.appendChild(newActionsCol);
@@ -818,6 +807,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			});
 			createStructures(sId);
 	});
+
 });
 </script>
 
@@ -829,10 +819,32 @@ window.addEventListener('DOMContentLoaded', function() {
 
 <!--
 
-	var options = {
-    valueNames: [ 'newest-tool-name', 'newest-tool-categories' ]
+var options = {
+	valueNames: [
+	'newestToolName',
+	'newestToolDescription',
+	'newestToolCategories',
+	{ name: 'url', attr: 'href' },
+	{ name: 'newestToolLove', attr: 'dataId' },
+	{ name: 'newestToolIcon', attr: 'src' }
+	],
+	item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" dataId="" id="love-11"><i class="materialIcons">favorite_border</i></a></div></li>'
 };
 
-var toolList = new List('newest-list', options);
+
+var values = [
+  { newestToolName: 'Trello', newestToolDescription:'Trellinho Super Parceiro', newestToolCategories:'Processos', url:'https://trello.com/', newestToolLove:'35', newestToolIcon:'https://trello.com/favicon.ico' }
+];
+
+var toolList = new List('newest-list', options, values);
+
+for (var i = cacheTools.length - 1; i >= 0; i--) {
+
+	var values = [
+  		{ name: cacheTools[i].name, description: cacheTools[i].description, categories: cacheTools[i].categories, url: cacheTools[i].website, love: cacheTools[i].id, icon: cacheTools[i].icon }
+	];
+
+	var toolList = new List('newest-list', options, values);
+}
 
 -->
