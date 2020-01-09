@@ -163,10 +163,10 @@ firebase.firestore();
 			</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
 				<div class="chip">
-					<img id="userImage" src="/shared/112/files/chs_google_icon.png" alt="Contact Person">
+					<img id="userImage" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
 					<span id="user-name"></span>
 					<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<use xlink:href="/shared/112/files/feather_sprite.svg#logout"/>
+						<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
 					</svg>
 				</div>
 			</ul>
@@ -186,19 +186,19 @@ firebase.firestore();
 	<div class="col s4">
 
 		<div class="collection">
-		    <a href="#newest" id="newest-filter" class="filter collectionItem active">
+		    <a href="#newest" id="newestFilter" class="filter collectionItem active">
 		    	<div class="col s2">
 		    		<i class="materialIcons">schedule</i>
 		    	</div>
 		    	Novidades
 		    </a>
-		    <a href="#favorites" id="favorites-filter" class="filter collectionItem red-text lighten-2">
+		    <a href="#favorites" id="favoritesFilter" class="filter collectionItem red-text lighten-2">
 				<div class="col s2">
 		    		<i class="materialIcons">favorite_border</i>
 		    	</div>
 		    	Favoritos
 		    </a>
-		    <a href="#popular" id="popular-filter" class="filter collectionItem red-text text-lighten-2">
+		    <a href="#popular" id="popularFilter" class="filter collectionItem red-text text-lighten-2">
 		    	<div class="col s2">
 		    		<i class="materialIcons">show_chart</i>
 		    	</div>
@@ -228,31 +228,31 @@ firebase.firestore();
 		  	<li class="collectionItem">
 			Categorias
 			</li>
-			<a href="/" data-filter="Análise" class="collectionItem category-filter red-text text-lighten-2">
+			<a href="/" dataFilter="Análise" class="collectionItem categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">insert_chart</i>
 				</div>
 			Análise
 			</a>
-			<a href="/" data-filter="Insights" class="collectionItem category-filter red-text text-lighten-2">
+			<a href="/" dataFilter="Insights" class="collectionItem categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
-			<a href="/" data-filter="Processos" class="collectionItem category-filter red-text text-lighten-2">
+			<a href="/" dataFilter="Processos" class="collectionItem categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">settings</i>
 				</div>
 			Processos
 			</a>
-			<a href="/" data-filter="Produtividade" class="collectionItem category-filter red-text text-lighten-2">
+			<a href="/" dataFilter="Produtividade" class="collectionItem categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
-			<a href="/" data-filter="SEO" class="collectionItem category-filter red-text lighten-2">
+			<a href="/" dataFilter="SEO" class="collectionItem categoryFilter red-text lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">search</i>
 				</div>
@@ -268,15 +268,15 @@ firebase.firestore();
 		<li id="favorites-tab" class="tab col s3 disabled"><a class="grey-text" href="#favorites">Favoritos</a></li>
 		<li id="popular-tab" class="tab col s3 disabled"><a class="grey-text" href="#popular">Populares</a></li>
 	</ul -->
-	<div id="newest-list">
-		<ul id ="newest" class="section white list-view list"></ul>
+	<div id="newestList">
+		<ul id ="newest" class="section white listView list"></ul>
 		<ul class="pagination center-align"></ul>
 	</div>
-	<div id="popular-list">
-		<ul id ="popular" class="section white list-view"></ul>
+	<div id="popularList">
+		<ul id ="popular" class="section white listView"></ul>
 	</div>
-	<div id ="favorites-list">
-		<ul id ="favorites" class="section white list-view"></ul>
+	<div id ="favoritesList">
+		<ul id ="favorites" class="section white listView"></ul>
 	</div>
 	<div id ="loader" class="section hidden">
 		<div class="progress grey lighten-2">
@@ -346,8 +346,8 @@ function addHandlers() {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
 	}
 
-	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
-		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
+	for (var i = getClass('categoryFilter').length - 1; i >= 0; i--) {
+		getClass('categoryFilter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
 	}
 }
 function manageLoader() {
@@ -358,15 +358,15 @@ function manageLoader() {
 	return;
 }
 function manageViews(view) {
-	for (var i = getClass('list-view').length - 1; i >= 0; i--) {
-		getClass('list-view')[i].classList.add('hidden');
+	for (var i = getClass('listView').length - 1; i >= 0; i--) {
+		getClass('listView')[i].classList.add('hidden');
 		getClass('filter')[i].classList.remove('active');
 	}
 	getId(view).classList.toggle('hidden');
-	getId(view + '-filter').classList.add('active');
+	getId(view + 'Filter').classList.add('active');
 }
 function getProfilePicUrl() {
-	return firebase.auth().currentUser.photoURL || '/shared/112/files/chs_google_icon.png';
+	return firebase.auth().currentUser.photoURL || '//pipz.io/shared/112/files/chs_google_icon.png';
 }
 function getUserName() {
 	return firebase.auth().currentUser.displayName;
@@ -384,15 +384,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 		M.toast({html: 'Usuário conectado com sucesso.', classes: 'white blue-text lighten-2'})
 		getId('userImage').src = getProfilePicUrl();
 		getId('user-name').innerText = getUserName();
-		getId('favorites-filter').addEventListener('click', loadFavorites);
-		getId('newest-filter').addEventListener('click', loadNewest);
+		getId('favoritesFilter').addEventListener('click', loadFavorites);
+		getId('newestFilter').addEventListener('click', loadNewest);
 //		getId('logoutIcon').classList.toggle('hidden');
 //		getId('logoutIcon').addEventListener('click', signOut);
-//		getId('favorites-filter').classList.toggle('disabled');
+//		getId('favoritesFilter').classList.toggle('disabled');
 		getLikesAndFavorites();
 	} else {
 		M.toast({html: 'Faça login para salvar suas preferências. (onAuthStateChanged)', classes: 'white blue-text lighten-2'})
-		getId('userImage').src = "/shared/112/files/chs_google_icon.png";
+		getId('userImage').src = "//pipz.io/shared/112/files/chs_google_icon.png";
 		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
 	}
 });
@@ -657,7 +657,7 @@ function fillStructures(context, id) {
 
 function filterCategory() {
 	listObj.filter(function(item) {
-		if (item.values()['newestToolCategories'] == this.getAttribute('data-filter')) {
+		if (item.values()['newestToolCategories'] == this.getAttribute('dataFilter')) {
 			console.log("true");
 			return true;
 		} else {
@@ -836,7 +836,7 @@ var values = [
   { newestToolName: 'Trello', newestToolDescription:'Trellinho Super Parceiro', newestToolCategories:'Processos', url:'https://trello.com/', newestToolLove:'35', newestToolIcon:'https://trello.com/favicon.ico' }
 ];
 
-var toolList = new List('newest-list', options, values);
+var toolList = new List('newestList', options, values);
 
 for (var i = cacheTools.length - 1; i >= 0; i--) {
 
@@ -844,7 +844,7 @@ for (var i = cacheTools.length - 1; i >= 0; i--) {
   		{ name: cacheTools[i].name, description: cacheTools[i].description, categories: cacheTools[i].categories, url: cacheTools[i].website, love: cacheTools[i].id, icon: cacheTools[i].icon }
 	];
 
-	var toolList = new List('newest-list', options, values);
+	var toolList = new List('newestList', options, values);
 }
 
 -->
