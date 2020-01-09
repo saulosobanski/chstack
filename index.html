@@ -1,18 +1,19 @@
 <html>
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
-<meta charset="utf-8" /> 
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Import Google Icon & Text Fonts-->
 <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:400,400i|IBM+Plex+Sans:100,100i,400,400i,700,700i|Material+Icons|Open+Sans|Lato&display=swap" rel="stylesheet"> 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <!-- Compiled and minified JavaScript -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <!-- Compiled and minified JQuery -->
-<script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 <!-- Import Feather-icons CDN Javascript -->
-<script src="//cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <!-- Import List.js CDN Javascript -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
 
 <!--Let browser know the pages' social appearance -->
@@ -23,7 +24,7 @@
 <title>Content Hacking Stack</title>
 
 <!-- Compiled and minified JQuery -->
-<script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 
 <!-- Load Custom CSS -->
@@ -164,10 +165,10 @@ firebase.firestore();
 			<div class="col s4">
 				<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
 					<div class="chip">
-						<img id="userImage" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
+						<img id="userImage" src="https://pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
 						<span id="user-name"></span>
 						<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
+							<use xlink:href="https://pipz.io/shared/112/files/feather_sprite.svg#logout"/>
 						</svg>
 					</div>
 				</ul>
@@ -340,6 +341,7 @@ var cacheTools = [],
 	pId = [], pName = [], pDesc = [], pCat = [], pWebsite = [], pIcon = [],
 	uLikes = [], uFavorites = [],
 	instance,
+	activeFilter = '',
 	toolList;
 function prevDef(event){
 	event.preventDefault();
@@ -369,7 +371,7 @@ function manageViews(view) {
 	getId(view + 'Filter').classList.add('active');
 }
 function getProfilePicUrl() {
-	return firebase.auth().currentUser.photoURL || '//pipz.io/shared/112/files/chs_google_icon.png';
+	return firebase.auth().currentUser.photoURL || 'https://pipz.io/shared/112/files/chs_google_icon.png';
 }
 function getUserName() {
 	return firebase.auth().currentUser.displayName;
@@ -395,7 +397,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		getLikesAndFavorites();
 	} else {
 		M.toast({html: 'Faça login para salvar suas preferências. (onAuthStateChanged)', classes: 'white blue-text lighten-2'})
-		getId('userImage').src = "//pipz.io/shared/112/files/chs_google_icon.png";
+		getId('userImage').src = "https://pipz.io/shared/112/files/chs_google_icon.png";
 		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
 	}
 });
@@ -658,20 +660,61 @@ function fillStructures(context, id) {
 
 }
 
-function filterCategory() {
-	filterQuery = this.getAttribute('data-filter');
-	toolList.filter(function(item) {
-		if (item.values()['newestToolCategories'] == filterQuery) {
-			console.log("true");
-			return true;
-		} else {
-			console.log("false");
-			return false;
-		}
-	});
+function createList() {
+	var options = {
+		valueNames: [
+		'newestToolName',
+		'newestToolDescription',
+		'newestToolCategories',
+		{ name: 'url', attr: 'href' },
+		{ name: 'newestToolLove', attr: 'data-id' },
+		{ name: 'newestToolLoveId', attr: 'id' },		
+		{ name: 'newestToolIcon', attr: 'src' }
+		],
+		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>'
+	};
+
+	for (var i = cacheTools.length - 1; i >= 0; i--) {
+
+		var values = [
+	  		{ newestToolName: cacheTools[i].name,
+	  			newestToolDescription: cacheTools[i].description,
+	  			newestToolCategories: cacheTools[i].categories,
+	  			newestToolLove: cacheTools[i].id,
+	  			newestToolLoveId: 'love-' + cacheTools[i].id,
+	  			newestToolIcon: cacheTools[i].icon,
+	  			url: cacheTools[i].website
+	  		}
+		];
+
+		toolList = new List('newestList', options, values);
+	}
 }
 
+
+function filterCategory() {
+	filterQuery = this.getAttribute('data-filter');
+
+	if (activeFilter == filterQuery) {
+		toolList.filter();
+	} else {
+
+		activeFilter = filterQuery;
+		toolList.filter(function(item) {
+			if (item.values()['newestToolCategories'] == filterQuery) {
+				console.log("true");
+				return true;
+			} else {
+				console.log("false");
+				return false;
+			}
+		});
+	}
+}
+
+
 function getStack(context, id) {
+
 	console.log('function getStack() called. context: ' + context + ", id: " + id);
 	switch (id) {
 		case "newest":
@@ -687,11 +730,12 @@ function getStack(context, id) {
 	}
 
 	cacheTools = [];
+
 	for (var i = context.length - 1; i >= 0; i--) {
 		var tools = db.collection("tools").doc(context[i]);
 		tools.get().then(function(doc) {
 			if (doc.exists) {
-				console.log("Document data:", doc.data());
+				// console.log("Document data:", doc.data());
 				var cacheToolObj = new Object();
 					cacheToolObj.id = doc.data().id;
 					cacheToolObj.name = doc.data().name;
@@ -716,11 +760,25 @@ function getStack(context, id) {
 		}).catch(function(error) {
 			console.log("Error getting document:", error);
 		});
-		console.log('stack product number ' + i + ' created.');
+
+			console.log('stack product number ' + i + ' created.');
 		}
-		console.log('all stack structures created.');
-		fillStructures(context, id);
+
+		console.log('all stack structures created. calling createList().');
+
+		if (cacheTools.length != 0) {
+			console.log(cacheTools);
+			createList();
+		} else {
+			console.log('cacheTools is empty. Trying again in 0.5sec');
+			setTimeout(function() {
+				createList();
+		}, 500);
+	}
 }
+
+/*
+
 function createStructures(context) {
 // manageLoader(); // Hide while loading.
 var tabId;
@@ -737,6 +795,7 @@ switch (context) {
 	break;
 	default:
 }
+
 for (var i = context.length - 1; i >= 0; i--) {
 	console.log('context length: ' + context.length);
 	console.log('current iteration: ' + i);
@@ -778,6 +837,9 @@ for (var i = context.length - 1; i >= 0; i--) {
 		console.log('calling function to fill structures.');			
 		getStack(context, tabId);
 }
+
+*/
+
 function destroyStructures(context) {
 	var TabId;
 	switch (context) {
@@ -807,9 +869,9 @@ window.addEventListener('DOMContentLoaded', function() {
 	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			sId.push(doc.id);
-			console.log(`${doc.id} => ${doc.data()}`);
+			// console.log(`${doc.id} => ${doc.data()}`);
 			});
-			createStructures(sId);
+			getStack(sId, 'newest');
 	});
 
 });
@@ -818,41 +880,5 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 <!--Compiled and minified JavaScript at end of body for optimized loading-->
-<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<script>
-
-function createList() {
-	var options = {
-		valueNames: [
-		'newestToolName',
-		'newestToolDescription',
-		'newestToolCategories',
-		{ name: 'url', attr: 'href' },
-		{ name: 'newestToolLove', attr: 'data-id' },
-		{ name: 'newestToolLoveId', attr: 'id' },		
-		{ name: 'newestToolIcon', attr: 'src' }
-		],
-		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>'
-	};
-
-	for (var i = cacheTools.length - 1; i >= 0; i--) {
-
-		var values = [
-	  		{ newestToolName: cacheTools[i].name,
-	  			newestToolDescription: cacheTools[i].description,
-	  			newestToolCategories: cacheTools[i].categories,
-	  			newestToolLove: cacheTools[i].id,
-	  			newestToolLoveId: 'love-' + cacheTools[i].id,
-	  			newestToolIcon: cacheTools[i].icon,
-	  			url: cacheTools[i].website
-	  		}
-		];
-
-		toolList = new List('newestList', options, values);
-	}
-}
-
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>
