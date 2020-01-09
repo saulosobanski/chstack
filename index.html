@@ -815,36 +815,32 @@ window.addEventListener('DOMContentLoaded', function() {
 </body>
 <!--Compiled and minified JavaScript at end of body for optimized loading-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</html>
 
-<!--
+<script>
 
-var options = {
-	valueNames: [
-	'newestToolName',
-	'newestToolDescription',
-	'newestToolCategories',
-	{ name: 'url', attr: 'href' },
-	{ name: 'newestToolLove', attr: 'dataId' },
-	{ name: 'newestToolIcon', attr: 'src' }
-	],
-	item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" dataId="" id="love-11"><i class="material-icons">favorite_border</i></a></div></li>'
-};
+function createList() {
+	var options = {
+		valueNames: [
+		'newestToolName',
+		'newestToolDescription',
+		'newestToolCategories',
+		{ name: 'url', attr: 'href' },
+		{ name: 'newestToolLove', attr: 'dataId' },
+		{ name: 'newestToolIcon', attr: 'src' }
+		],
+		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" dataId="" id="love-11"><i class="material-icons">favorite_border</i></a></div></li>'
+	};
 
+	for (var i = cacheTools.length - 1; i >= 0; i--) {
 
-var values = [
-  { newestToolName: 'Trello', newestToolDescription:'Trellinho Super Parceiro', newestToolCategories:'Processos', url:'https://trello.com/', newestToolLove:'35', newestToolIcon:'https://trello.com/favicon.ico' }
-];
+		var values = [
+	  		{ newestToolName: cacheTools[i].name, newestToolDescription: cacheTools[i].description, newestToolCategories: cacheTools[i].categories, url: cacheTools[i].website, newestToolLove: cacheTools[i].id, newestToolIcon: cacheTools[i].icon }
+		];
 
-var toolList = new List('newestList', options, values);
-
-for (var i = cacheTools.length - 1; i >= 0; i--) {
-
-	var values = [
-  		{ name: cacheTools[i].name, description: cacheTools[i].description, categories: cacheTools[i].categories, url: cacheTools[i].website, love: cacheTools[i].id, icon: cacheTools[i].icon }
-	];
-
-	var toolList = new List('newestList', options, values);
+		var toolList = new List('newestList', options, values);
+	}
 }
 
--->
+</script>
+
+</html>
