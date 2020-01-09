@@ -228,31 +228,31 @@ firebase.firestore();
 		  	<li class="collection-item">
 			Categorias
 			</li>
-			<a href="/" dataFilter="Análise" class="collection-item categoryFilter red-text text-lighten-2">
+			<a href="/" data-fileter="Análise" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">insert_chart</i>
 				</div>
 			Análise
 			</a>
-			<a href="/" dataFilter="Insights" class="collection-item categoryFilter red-text text-lighten-2">
+			<a href="/" data-fileter="Insights" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
-			<a href="/" dataFilter="Processos" class="collection-item categoryFilter red-text text-lighten-2">
+			<a href="/" data-fileter="Processos" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">settings</i>
 				</div>
 			Processos
 			</a>
-			<a href="/" dataFilter="Produtividade" class="collection-item categoryFilter red-text text-lighten-2">
+			<a href="/" data-fileter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="material-icons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
-			<a href="/" dataFilter="SEO" class="collection-item categoryFilter red-text lighten-2">
+			<a href="/" data-fileter="SEO" class="collection-item category-filter red-text lighten-2">
 				<div class="col s2">
 					<i class="material-icons">search</i>
 				</div>
@@ -338,6 +338,7 @@ var cacheTools = [],
 	pId = [], pName = [], pDesc = [], pCat = [], pWebsite = [], pIcon = [],
 	uLikes = [], uFavorites = [],
 	instance;
+	toolList;
 function prevDef(event){
 	event.preventDefault();
 }
@@ -346,8 +347,8 @@ function addHandlers() {
 		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
 	}
 
-	for (var i = getClass('categoryFilter').length - 1; i >= 0; i--) {
-		getClass('categoryFilter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
+	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
+		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
 	}
 }
 function manageLoader() {
@@ -445,7 +446,7 @@ function loadNewest() {
 }
 function userLoveProduct() {
 if (isUserSignedIn() == true) {
-	var lovedId = parseInt(this.getAttribute('dataId'));
+	var lovedId = parseInt(this.getAttribute('data-id'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLoves;
@@ -493,7 +494,7 @@ if (isUserSignedIn() == true) {
 }
 function userLikeProduct() {
 if (isUserSignedIn() == true) {
-	var likedId = parseInt(this.getAttribute('dataId'));
+	var likedId = parseInt(this.getAttribute('data-id'));
 	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
 	var db = firebase.firestore();
 	var alreadyLikes;
@@ -638,8 +639,8 @@ function fillStructures(context, id) {
 			getClass(id + 'ToolName')[i].setAttribute('href', cacheTools[i].website);
 			getClass(id + 'ToolDescription')[i].innerText = cacheTools[i].description;
 			getClass(id + 'ToolCategories')[i].innerText = cacheTools[i].categories;
-	//			getClass(id + 'ToolLike')[i].setAttribute('dataId', cacheTools[i].id);
-			getClass(id + 'ToolLove')[i].setAttribute('dataId', cacheTools[i].id);					
+	//			getClass(id + 'ToolLike')[i].setAttribute('data-id', cacheTools[i].id);
+			getClass(id + 'ToolLove')[i].setAttribute('data-id', cacheTools[i].id);					
 	//			getClass(id + 'ToolLike')[i].setAttribute('id', id + '-like-' + cacheTools[i].id);
 			getClass(id + 'ToolLove')[i].setAttribute('id', id + '-love-' + cacheTools[i].id);		
 	//			getClass(id + 'ToolLike')[i].setAttribute('onclick', 'userLikeProduct(this)');
@@ -656,8 +657,9 @@ function fillStructures(context, id) {
 }
 
 function filterCategory() {
-	listObj.filter(function(item) {
-		if (item.values()['newestToolCategories'] == this.getAttribute('dataFilter')) {
+	filterQuery = this.getAttribute('data-filter');
+	toolList.filter(function(item) {
+		if (item.values()['newest-tool-categories'] == filterQuery) {
 			console.log("true");
 			return true;
 		} else {
@@ -825,19 +827,27 @@ function createList() {
 		'newestToolDescription',
 		'newestToolCategories',
 		{ name: 'url', attr: 'href' },
-		{ name: 'newestToolLove', attr: 'dataId' },
+		{ name: 'newestToolLove', attr: 'data-id' },
+		{ name: 'newestToolLoveId', attr: 'id' },		
 		{ name: 'newestToolIcon', attr: 'src' }
 		],
-		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" dataId="" id="love-11"><i class="material-icons">favorite_border</i></a></div></li>'
+		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>'
 	};
 
 	for (var i = cacheTools.length - 1; i >= 0; i--) {
 
 		var values = [
-	  		{ newestToolName: cacheTools[i].name, newestToolDescription: cacheTools[i].description, newestToolCategories: cacheTools[i].categories, url: cacheTools[i].website, newestToolLove: cacheTools[i].id, newestToolIcon: cacheTools[i].icon }
+	  		{ newestToolName: cacheTools[i].name,
+	  			newestToolDescription: cacheTools[i].description,
+	  			newestToolCategories: cacheTools[i].categories,
+	  			newestToolLove: cacheTools[i].id,
+	  			newestToolLoveId: 'love-' + cacheTools[i].id,
+	  			newestToolIcon: cacheTools[i].icon,
+	  			url: cacheTools[i].website
+	  		}
 		];
 
-		var toolList = new List('newestList', options, values);
+		toolList = new List('newestList', options, values);
 	}
 }
 
