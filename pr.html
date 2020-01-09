@@ -1,0 +1,871 @@
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Import Google Icon & Text Fonts-->
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:400,400i|IBM+Plex+Sans:100,100i,400,400i,700,700i|Material+Icons|Open+Sans|Lato&display=swap" rel="stylesheet"> 
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- Compiled and minified JQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<!-- Import Feather-icons CDN Javascript -->
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<!-- Import List.js CDN Javascript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+
+<!--Let browser know the pages' social appearance -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta property="og:type" content="website">
+<title>Content Hacking Stack</title>
+
+<!-- Compiled and minified JQuery -->
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+
+<!-- Load Custom CSS -->
+<style>
+a {
+	outline: 0;
+	color: #ee6e73;
+}
+body {
+	font-family: 'Lato', sans-serif;
+	color: rgba(0,0,0,0.87);
+}
+h4 {
+	font-weight: 900;
+	color: #fff;
+}
+nav {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+.newestToolName,
+.favoritesToolName,
+.popularToolName,
+.toast {
+	font-weight: 600;
+}
+a.newestToolLike,
+a.favoritesToolLike,
+a.popularToolLike,
+a.newestToolLove,
+a.favoritesToolLove,
+a.popularToolLove {
+	color: rgba(0,0,0,0.87);
+}
+a.newestToolLike:hover,
+a.favoritesToolLike:hover,
+a.popularToolLike:hover,
+a.newestToolLove:hover,
+a.favoritesToolLove:hover,
+a.popularToolLove:hover {
+	cursor: pointer;
+	animation: transform 0.5s;
+	transform: scale(1.05);
+}
+.newestToolIcon,
+.favoritesToolIcon,
+.popularToolName  {
+	width: 20px;
+	margin: 0 0.50rem 0 0;
+	background: white;
+}
+.icon-active {
+	color: #f44336 !important;
+}
+#newest,
+#popular,
+#favorites {
+	border: 1px #eee solid;
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+	margin: 0 0 !important;		
+}
+#newest,
+#popular,
+#favorites > .row {
+	padding-bottom: 0.1rem;		
+}
+.hidden {
+	display: none !important;
+}
+#logoutIcon {
+	padding: 0;
+	color: grey;
+}
+#nav-mobile {
+	height: 100%
+}
+.collection {
+	margin: 0 0 1rem 0 !important;
+	border: 1px #eee solid !important;
+}
+.collection .collection-item {
+	padding: 20px 20px !important;
+    background-color: #fff !important;	
+}
+.collection a.collection-item {
+	color: #E57373 !important;
+}
+.collection .collection-item.active {
+    background-color: #E57373 !important;
+    color: #fff !important;
+}
+</style>
+
+<!--Load Pipz tracker-->
+
+<!--Custom Style-->
+</head>
+
+<body class="grey lighten-5">
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+ https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+apiKey: "AIzaSyD6iGqVTZZ9sGat03IdLwbMkIKVVX53Wro",
+authDomain: "content-hacking-stack.firebaseapp.com",
+databaseURL: "https://content-hacking-stack.firebaseio.com",
+projectId: "content-hacking-stack",
+storageBucket: "content-hacking-stack.appspot.com",
+messagingSenderId: "351967844664",
+appId: "1:351967844664:web:c2ef08875cc364288289cd",
+measurementId: "G-05FNFWN8PR"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+firebase.auth();
+firebase.database();
+firebase.firestore();
+</script>
+
+<div class="container">
+	<nav class="row">
+		<div class="nav-wrapper grey lighten-5 valign-wrapper">
+			<div class="col s8">
+				<h4 class="grey-text text-darken-4">Content Marketing Stack</h4>
+			</div>
+			<div class="col s4">
+				<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
+					<div class="chip">
+						<img id="userImage" src="https://pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
+						<span id="user-name"></span>
+						<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<use xlink:href="https://pipz.io/shared/112/files/feather_sprite.svg#logout"/>
+						</svg>
+					</div>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+<div class="section">
+	<div class="row">
+		<div class="col s12">
+			<div class="white" style="height:100px"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col s4">
+
+		<div class="collection">
+		    <a href="#newest" id="newestFilter" class="filter collection-item active">
+		    	<div class="col s2">
+		    		<i class="material-icons">schedule</i>
+		    	</div>
+		    	Novidades
+		    </a>
+		    <a href="#favorites" id="favoritesFilter" class="filter collection-item red-text lighten-2">
+				<div class="col s2">
+		    		<i class="material-icons">favorite_border</i>
+		    	</div>
+		    	Favoritos
+		    </a>
+		    <a href="#popular" id="popularFilter" class="filter collection-item red-text text-lighten-2">
+		    	<div class="col s2">
+		    		<i class="material-icons">show_chart</i>
+		    	</div>
+		    	Populares
+		    </a>
+		</div>
+
+		<ul class="collection">
+		  	<li class="collection-item">
+			Tags
+			</li>
+			<a href="/" class="collection-item red-text lighten-2">
+				<div class="col s2">
+					<i class="material-icons">attach_money</i>
+				</div>
+			Pagas
+			</a>
+			<a href="/" class="collection-item red-text text-lighten-2">
+				<div class="col s2">
+					<i class="material-icons">money_off</i>
+				</div>
+			Gratuitas
+			</a>
+		</ul>
+
+		<ul class="collection">
+		  	<li class="collection-item">
+			Categorias
+			</li>
+			<a href="/" data-filter="Análise" class="collection-item category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="material-icons">insert_chart</i>
+				</div>
+			Análise
+			</a>
+			<a href="/" data-filter="Insights" class="collection-item category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="material-icons">lightbulb_outline</i>
+				</div>
+			Insights
+			</a>
+			<a href="/" data-filter="Processos" class="collection-item category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="material-icons">settings</i>
+				</div>
+			Processos
+			</a>
+			<a href="/" data-filter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
+				<div class="col s2">
+					<i class="material-icons">hourglass_empty</i>
+				</div>
+			Produtividade
+			</a>
+			<a href="/" data-filter="SEO" class="collection-item category-filter red-text lighten-2">
+				<div class="col s2">
+					<i class="material-icons">search</i>
+				</div>
+			SEO
+			</a>
+		</ul>
+		
+	</div>
+
+	<div class="col s8">
+	<!-- ul class="tabs tabs-fixed-width grey lighten-5">
+		<li id="newest-tab" class="tab col s3"><a class="grey-text" href="#newest">Recentes</a></li>
+		<li id="favorites-tab" class="tab col s3 disabled"><a class="grey-text" href="#favorites">Favoritos</a></li>
+		<li id="popular-tab" class="tab col s3 disabled"><a class="grey-text" href="#popular">Populares</a></li>
+	</ul -->
+	<div id="newestList">
+		<ul id ="newest" class="section white listView list"></ul>
+		<ul class="pagination center-align"></ul>
+	</div>
+	<div id="popularList">
+		<ul id ="popular" class="section white listView"></ul>
+	</div>
+	<div id ="favoritesList">
+		<ul id ="favorites" class="section white listView"></ul>
+	</div>
+	<div id ="loader" class="section hidden">
+		<div class="progress grey lighten-2">
+			<div class="indeterminate red lighten-3"></div>
+		</div>
+	</div>
+	</div>
+</div>
+
+<!--div id ="product" class="section white">
+	<div class="row">
+		<div class="row valign-wrapper">
+			<form id="form">
+				<div class="col s1">
+					<input id="id" type="text" placeholder="Id" /> 
+				</div>			
+				<div class="col s1 valign-wrapper">
+					<input id="icon" type="text" placeholder="Ícone" />
+				</div>
+					<div class="col s2 valign-wrapper">
+					<input id="name" type="text" placeholder="Nome" />
+				</div>
+				<div class="col s2">
+					<input id="description" type="text" placeholder="Descrição" />
+				</div>
+				<div class="col s2">
+					<input id="website" type="text" placeholder="Website" />
+				</div>
+				<div class="col s2">
+					<input id="categories" type="text" placeholder="Categoria" />
+				</div>
+				<div class="col s1 center-align">
+					<input id="tags" type="text" placeholder="Tags" />
+				</div>
+					<button class="btn waves-effect waves-light grey white-text text-darken-4" onclick="addProduct()" type="button">OK</button>	
+			</form>
+		</div>
+	</div>
+</div-->
+
+
+
+<!-- button class="btn waves-effect waves-light yellow darken-2 grey-text text-darken-4" onclick="signIn()" type="button">Fazer Login</button>
+<button class="btn waves-effect waves-light grey white-text text-darken-4" onclick="signOut()" type="button">Fazer Logout</button-->
+
+<script type="text/javascript">
+var db = firebase.firestore();
+var cacheTools = [],
+	cacheStack = [],
+	cacheFavorite = [],
+	cachePopular = [],
+	cacheToolObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cacheStackObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cacheFavoriteObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},
+	cachePopularObj = {id: '', name: '', description: '', categories: '', website: '', icon: '', userfavorite: false},	
+	tId = [], tName = [], tDesc = [], tCat = [], tWebsite = [], tIcon = [],
+	sId = [], sName = [], sDesc = [], sCat = [], sWebsite = [], sIcon = [],
+	fId = [], fName = [], fDesc = [], fCat = [], fWebsite = [], fIcon = [],
+	pId = [], pName = [], pDesc = [], pCat = [], pWebsite = [], pIcon = [],
+	uLikes = [], uFavorites = [],
+	instance,
+	toolList;
+function prevDef(event){
+	event.preventDefault();
+}
+function addHandlers() {
+	for (var i = document.getElementsByTagName('a').length - 1; i >= 0; i--) {
+		document.getElementsByTagName('a')[i].addEventListener("click", function(event){event.preventDefault();}, false);
+	}
+
+	for (var i = getClass('category-filter').length - 1; i >= 0; i--) {
+		getClass('category-filter')[i].addEventListener('click', filterCategory); //Filtros de Categoria
+	}
+}
+function manageLoader() {
+	getId('loader').classList.toggle('hidden');
+	getId('newest').classList.toggle('hidden');
+	getId('favorites').classList.toggle('hidden');
+	getId('popular').classList.toggle('hidden');
+	return;
+}
+function manageViews(view) {
+	for (var i = getClass('listView').length - 1; i >= 0; i--) {
+		getClass('listView')[i].classList.add('hidden');
+		getClass('filter')[i].classList.remove('active');
+	}
+	getId(view).classList.toggle('hidden');
+	getId(view + 'Filter').classList.add('active');
+}
+function getProfilePicUrl() {
+	return firebase.auth().currentUser.photoURL || 'https://pipz.io/shared/112/files/chs_google_icon.png';
+}
+function getUserName() {
+	return firebase.auth().currentUser.displayName;
+}
+function signIn() {
+	var provider = new firebase.auth.GoogleAuthProvider();
+	firebase.auth().signInWithPopup(provider);
+}
+function signOut() {
+	firebase.auth().signOut();
+	getId('logoutIcon').classList.toggle('hidden');
+}
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+		M.toast({html: 'Usuário conectado com sucesso.', classes: 'white blue-text lighten-2'})
+		getId('userImage').src = getProfilePicUrl();
+		getId('user-name').innerText = getUserName();
+		getId('favoritesFilter').addEventListener('click', loadFavorites);
+		getId('newestFilter').addEventListener('click', loadNewest);
+//		getId('logoutIcon').classList.toggle('hidden');
+//		getId('logoutIcon').addEventListener('click', signOut);
+//		getId('favoritesFilter').classList.toggle('disabled');
+		getLikesAndFavorites();
+	} else {
+		M.toast({html: 'Faça login para salvar suas preferências. (onAuthStateChanged)', classes: 'white blue-text lighten-2'})
+		getId('userImage').src = "https://pipz.io/shared/112/files/chs_google_icon.png";
+		getId('user-name').innerHTML = "<a href='#' style='display:contents' onclick='signIn()'>Login com Google</a>";
+	}
+});
+function isUserSignedIn() {
+	return !!firebase.auth().currentUser;
+}
+function loadFavorites() {
+	manageViews('favorites');
+	// manageLoader();
+	cachedFavorites = fId;
+	fId = [];
+	if (isUserSignedIn() == true) {
+		db.collection("tools").orderBy("id").get()
+			.then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+					if (uFavorites.indexOf(doc.data().id) !== -1) {
+						fId.push(doc.id);
+					}
+				});
+					if (fId !== cachedFavorites) {
+						getId('favorites').innerHTML = '';
+						createStructures(fId);
+					}
+			})
+			.catch(function(error) {
+				console.log("Error getting documents: ", error);
+		});
+	} else {
+		M.toast({html: 'Você precisa estar online! (loadFavorites)', classes: 'white blue-text lighten-2'})
+	}
+}
+function loadNewest() {
+	manageViews('newest');
+	// manageLoader();
+	cachedNewest = sId;
+	sId = [];
+	if (!cachedNewest) {
+		db.collection("tools").orderBy("id").get().then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				sId.push(doc.id);
+				console.log(`${doc.id} => ${doc.data()}`);
+				});
+					createStructures(sId);
+			});
+	}
+	for (var i = getId('newest').getElementsByClassName('row').length - 1; i > 0; i--) {
+		getId('newest-love-' + i).classList.remove('icon-active');
+	}
+	getLikesAndFavorites(sId, 'newest');
+}
+function userLoveProduct() {
+if (isUserSignedIn() == true) {
+	var lovedId = parseInt(this.getAttribute('data-id'));
+	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
+	var db = firebase.firestore();
+	var alreadyLoves;
+	if (uFavorites == undefined) {
+		uFavorites.push(lovedId);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			likes: uFavorites
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("New liked product with the id " + lovedId + " successfully added.");
+			getId(id + '-like-' + lovedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	} else {
+		var alreadyLoves = uFavorites.find(function(product) { return product == lovedId });
+	}
+	if (alreadyLoves == undefined) {
+		uFavorites.push(lovedId);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			favorites: uFavorites
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("New favorite with the id " + lovedId + " successfully added.");
+			getId(id + '-love-' + lovedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	} else {
+		var index = uFavorites.indexOf(lovedId);
+			uFavorites.splice(index, 1);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			favorites: uFavorites
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("Favorite with the id " + lovedId + " successfully removed.");
+			getId(id + '-love-' + lovedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	}
+} else {
+	M.toast({html: 'Você precisa estar online! (userLoveProduct)', classes: 'white blue-text lighten-2'})
+}
+}
+function userLikeProduct() {
+if (isUserSignedIn() == true) {
+	var likedId = parseInt(this.getAttribute('data-id'));
+	var id = this.getAttribute('id').substring(0, this.getAttribute('id').indexOf('-l'));
+	var db = firebase.firestore();
+	var alreadyLikes;
+	if (uLikes == undefined) {
+		uLikes.push(likedId);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			likes: uLikes
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("New liked product with the id " + likedId + " successfully added.");
+			getId(id + '-like-' + likedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	} else {
+		var alreadyLikes = uLikes.find(function(product) { return product == id	});
+	}
+	if (alreadyLikes == undefined) {
+		uLikes.push(likedId);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			likes: uLikes
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("New liked product with the id " + likedId + " successfully added.");
+			getId(id + '-like-' + likedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	} else {
+		var index = uLikes.indexOf(likedId);
+			uLikes.splice(index, 1);
+		db.collection("users").doc(firebase.auth().currentUser.uid).update({
+			likes: uLikes
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+			console.log("Liked product with the id " + likedId + " successfully removed.");
+			getId(id + '-like-' + likedId).classList.toggle('icon-active');
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+	}
+} else {
+	M.toast({html: 'Você precisa estar online! (userLikeProduct)', classes: 'white blue-text lighten-2'})
+}
+}
+function getLikesAndFavorites(context, id) {
+
+if (isUserSignedIn() == true) {
+var userData = db.collection("users").doc(firebase.auth().currentUser.uid);
+	userData.get().then(function(doc) {
+		if (doc.exists) {
+			console.log("Document data:", doc.data());
+			uLikes = doc.data().likes;
+			uFavorites = doc.data().favorites;
+		} else {
+			userData.set({
+				likes: [],
+				favorites: []
+		}).then(function(docRef) {
+//			console.log("Document data: ", doc.data());
+	M.toast({html: 'Conta criada e conectada com sucesso!', classes: 'white blue-text lighten-2'});
+		}).catch(function(error) {
+			console.log("Error setting document:", error);
+		});
+		}
+	}).then(function() {
+
+		if (uLikes) {
+			for (var i = uLikes.length - 1; i >= 0; i--) {
+				getId(id + '-like-' + uLikes[i]).classList.toggle('icon-active');
+			}
+		}
+		if (uFavorites) {
+			for (var i = uFavorites.length - 1; i >= 0; i--) {
+				getId(id + '-love-' + uFavorites[i]).classList.toggle('icon-active');
+
+				for (var y = cacheTools.length - 1; y >= 0; y--) {
+					if (cacheTools[y].id == uFavorites[i]) {
+						cacheTools[y].userfavorite = true;
+						console.log(cacheTools[y]);
+					}
+				}
+			}
+		}
+
+	}).catch(function(error) {
+		console.log("Error getting document:", error);
+	})
+} else {
+	console.log('User is not logged in.')
+}
+	// manageLoader(); //Show loaded content
+}
+function addProduct() {
+var db = firebase.firestore();
+var toolId = getId('id').value;
+var toolName = getId('name').value;
+var toolDescription = getId('description').value;
+var toolIcon = getId('icon').value;
+var toolWebsite = getId('website').value;
+var toolCategories = getId('categories').value;
+var toolTags = getId('tags').value;					
+db.collection("tools").add({
+	id: parseInt(toolId),
+	name: toolName,
+	description: toolDescription,
+	icon: toolIcon,
+	website: toolWebsite,
+	categories: [toolCategories],
+	tags: [toolTags]
+})
+.then(function(docRef) {
+	console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+	console.error("Error adding document: ", error);
+});
+}
+function getClass(identifier) {
+	var el = document.getElementsByClassName(identifier);
+	return el;
+}
+function getId(identifier) {
+	var el = document.getElementById(identifier);
+	return el;
+}
+function newEl(element_type, css) {
+var el = document.createElement(element_type);
+if (css) {
+	for (i = 0; i <= css.length - 1; i++) {
+		el.classList.add(css[i]);
+	}
+}
+return el;
+}
+function fillStructures(context, id) {
+	console.log(id);
+	if (cacheTools.length != 0) {
+		for (var i = context.length - 1; i >= 0; i--) {
+			getClass(id + 'ToolIcon')[i].src = cacheTools[i].icon;
+			getClass(id + 'ToolName')[i].innerText = cacheTools[i].name;
+			getClass(id + 'ToolName')[i].setAttribute('href', cacheTools[i].website);
+			getClass(id + 'ToolDescription')[i].innerText = cacheTools[i].description;
+			getClass(id + 'ToolCategories')[i].innerText = cacheTools[i].categories;
+	//			getClass(id + 'ToolLike')[i].setAttribute('data-id', cacheTools[i].id);
+			getClass(id + 'ToolLove')[i].setAttribute('data-id', cacheTools[i].id);					
+	//			getClass(id + 'ToolLike')[i].setAttribute('id', id + '-like-' + cacheTools[i].id);
+			getClass(id + 'ToolLove')[i].setAttribute('id', id + '-love-' + cacheTools[i].id);		
+	//			getClass(id + 'ToolLike')[i].setAttribute('onclick', 'userLikeProduct(this)');
+	//			getClass(id + 'ToolLove')[i].setAttribute('onclick', 'userLoveProduct(this)');
+		}
+	} else {
+		console.log('Data not loaded. Trying again in 1sec');
+		setTimeout(function() {
+			fillStructures(context, id);
+		}, 1000);
+	}
+		getLikesAndFavorites(context, id);
+
+}
+
+function filterCategory() {
+	filterQuery = this.getAttribute('data-filter');
+	toolList.filter(function(item) {
+		if (item.values()['newestToolCategories'] == filterQuery) {
+			console.log("true");
+			return true;
+		} else {
+			console.log("false");
+			return false;
+		}
+	});
+}
+
+
+function getStack(context, id) {
+
+	console.log('function getStack() called. context: ' + context + ", id: " + id);
+	switch (id) {
+		case "newest":
+			cache = cacheStack;
+		break;
+		case "favorites":
+			cache = cacheFavorite;
+		break;
+		case "popular":
+			cache = cachePopular;
+		break;
+		default:
+	}
+
+	cacheTools = [];
+
+	for (var i = context.length - 1; i >= 0; i--) {
+		var tools = db.collection("tools").doc(context[i]);
+		tools.get().then(function(doc) {
+			if (doc.exists) {
+				// console.log("Document data:", doc.data());
+				var cacheToolObj = new Object();
+					cacheToolObj.id = doc.data().id;
+					cacheToolObj.name = doc.data().name;
+					cacheToolObj.description = doc.data().description;
+					cacheToolObj.categories = doc.data().categories;
+					cacheToolObj.website = doc.data().website;
+					cacheToolObj.icon = doc.data().icon;
+					cacheToolObj.userfavorite = false;
+				cacheTools.push(cacheToolObj);
+	//	        tId.push(doc.data().id);
+	//	        tName.push(doc.data().name);
+	//			tDesc.push(doc.data().description);
+	//			tCat.push(doc.data().categories);
+	//			tWebsite.push(doc.data().website);
+	//			tIcon.push(doc.data().icon);
+	//				console.log('function fillStructures() being called. id:' + doc.data().id);
+	//				fillStructures(doc.data().id);
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+
+			console.log('stack product number ' + i + ' created.');
+		}
+
+		createList();
+		console.log('all stack structures created.');
+}
+
+/*
+
+function createStructures(context) {
+// manageLoader(); // Hide while loading.
+var tabId;
+console.log(context);
+switch (context) {
+	case sId:
+		tabId = "newest";
+	break;
+	case fId:
+		tabId = "favorites";
+	break;
+	case pId:
+		tabId = "popular";
+	break;
+	default:
+}
+
+for (var i = context.length - 1; i >= 0; i--) {
+	console.log('context length: ' + context.length);
+	console.log('current iteration: ' + i);
+		var stackList = getId(tabId),
+			newStackRow = newEl('li', ['valign-wrapper']);
+			stackList.appendChild(newStackRow);
+		var newNameCol = newEl('div', ['col' , 'l4', 's6', 'valign-wrapper']),
+			newNameEl = newEl('a', [tabId + 'ToolName']),
+			newIconEl = newEl('img', ['left', tabId + 'ToolIcon']); //circle
+		newStackRow.appendChild(newNameCol);
+		newNameCol.appendChild(newIconEl);
+		newNameCol.appendChild(newNameEl);
+		var newDescriptionCol = newEl('div', ['col', 'l5', 'hide-on-small-only']),
+			newDescriptionEl = newEl('p', [tabId + 'ToolDescription', 'truncate']);
+		newStackRow.appendChild(newDescriptionCol);
+		newDescriptionCol.appendChild(newDescriptionEl);
+		var newCategoryCol = newEl('div', ['col' , 'l2', 's4']),
+			newCategoryEl = newEl('p', [tabId + 'ToolCategories']);
+		newStackRow.appendChild(newCategoryCol);
+		newCategoryCol.appendChild(newCategoryEl);
+		var newActionsCol = newEl('div', ['col', 'l1', 's2', 'center-align']),
+//				newLikeEl = newEl('a', [tabId + 'ToolLike']),
+			newLoveEl = newEl('a', [tabId + 'ToolLove']),
+//				newLikeIconEl = newEl('i'),
+			newLoveIconEl = newEl('i');
+		newStackRow.appendChild(newActionsCol);
+//			newActionsCol.appendChild(newLikeEl);
+		newActionsCol.appendChild(newLoveEl);
+//			newLikeIconEl.setAttribute('data-feather', 'thumbs-up');
+		newLoveIconEl.setAttribute('data-feather', 'heart');
+//			newLikeEl.addEventListener('click', userLikeProduct);
+		newLoveEl.addEventListener('click', userLoveProduct);
+//			newLikeEl.appendChild(newLikeIconEl);
+		newLoveEl.appendChild(newLoveIconEl);
+		feather.replace({ width: 24, height: 24})
+		console.log('structure number ' + i + ' created.');
+}
+		console.log('all ' + i + ' structures created.');
+		console.log('calling function to fill structures.');			
+		getStack(context, tabId);
+}
+
+*/
+
+function destroyStructures(context) {
+	var TabId;
+	switch (context) {
+		case sId:
+			tabId = "newest";
+		break;
+		case fId:
+			tabId = "favorites";
+		break;
+		case pId:
+			tabId = "popular";
+		break;
+		default:
+	}
+	for (var i = getId(TabId).getElementsByClassName('row').length - 1; i >= 0; i--) {
+		getId(TabId).getElementsByClassName('row')[i].remove();
+	}
+	return;
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+	var db = firebase.firestore();
+	instance = M.Tabs.init(getClass('tabs')[0]);
+	manageViews('newest');
+	addHandlers();
+
+	db.collection("tools").orderBy("id").get().then((querySnapshot) => {
+		querySnapshot.forEach((doc) => {
+			sId.push(doc.id);
+			// console.log(`${doc.id} => ${doc.data()}`);
+			});
+			getStack(sId, 'newest');
+	});
+
+});
+</script>
+
+
+</body>
+<!--Compiled and minified JavaScript at end of body for optimized loading-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+
+function createList() {
+	var options = {
+		valueNames: [
+		'newestToolName',
+		'newestToolDescription',
+		'newestToolCategories',
+		{ name: 'url', attr: 'href' },
+		{ name: 'newestToolLove', attr: 'data-id' },
+		{ name: 'newestToolLoveId', attr: 'id' },		
+		{ name: 'newestToolIcon', attr: 'src' }
+		],
+		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>'
+	};
+
+	for (var i = cacheTools.length - 1; i >= 0; i--) {
+
+		var values = [
+	  		{ newestToolName: cacheTools[i].name,
+	  			newestToolDescription: cacheTools[i].description,
+	  			newestToolCategories: cacheTools[i].categories,
+	  			newestToolLove: cacheTools[i].id,
+	  			newestToolLoveId: 'love-' + cacheTools[i].id,
+	  			newestToolIcon: cacheTools[i].icon,
+	  			url: cacheTools[i].website
+	  		}
+		];
+
+		toolList = new List('newestList', options, values);
+	}
+}
+
+</script>
+
+</html>
