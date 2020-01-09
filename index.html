@@ -156,27 +156,31 @@ firebase.firestore();
 </script>
 
 <div class="container">
-	<nav>
+	<nav class="row">
 		<div class="nav-wrapper grey lighten-5">
-			<a href="/" class="brand-logo">
-				<h4 class="grey-text text-darken-4">ChStack</h4>
-			</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
-				<div class="chip">
-					<img id="userImage" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
-					<span id="user-name"></span>
-					<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
-					</svg>
-				</div>
-			</ul>
+			<div class="col s8">
+				<a href="/" class="brand-logo">
+					<h4 class="grey-text text-darken-4 col l8">Content Marketing Stack</h4>
+				</a>
+			</div>
+			<div class="col s4">
+				<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
+					<div class="chip">
+						<img id="userImage" src="//pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
+						<span id="user-name"></span>
+						<svg id="logoutIcon hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<use xlink:href="//pipz.io/shared/112/files/feather_sprite.svg#logout"/>
+						</svg>
+					</div>
+				</ul>
+			</div>
 		</div>
 	</nav>
 
 <div class="section">
 	<div class="row">
 		<div class="col s12">
-			<div class="white" style="height:200px"></div>
+			<div class="white" style="height:100px"></div>
 		</div>
 	</div>
 </div>
@@ -659,7 +663,7 @@ function fillStructures(context, id) {
 function filterCategory() {
 	filterQuery = this.getAttribute('data-filter');
 	toolList.filter(function(item) {
-		if (item.values()['newest-tool-categories'] == filterQuery) {
+		if (item.values()['newestToolCategories'] == filterQuery) {
 			console.log("true");
 			return true;
 		} else {
