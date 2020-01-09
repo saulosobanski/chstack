@@ -105,14 +105,14 @@ a.popularToolLove:hover {
 	margin: 0 0 1rem 0 !important;
 	border: 1px #eee solid !important;
 }
-.collection .collectionItem {
+.collection .collection-item {
 	padding: 20px 20px !important;
     background-color: #fff !important;	
 }
-.collection a.collectionItem {
+.collection a.collection-item {
 	color: #E57373 !important;
 }
-.collection .collectionItem.active {
+.collection .collection-item.active {
     background-color: #E57373 !important;
     color: #fff !important;
 }
@@ -186,19 +186,19 @@ firebase.firestore();
 	<div class="col s4">
 
 		<div class="collection">
-		    <a href="#newest" id="newestFilter" class="filter collectionItem active">
+		    <a href="#newest" id="newestFilter" class="filter collection-item active">
 		    	<div class="col s2">
 		    		<i class="materialIcons">schedule</i>
 		    	</div>
 		    	Novidades
 		    </a>
-		    <a href="#favorites" id="favoritesFilter" class="filter collectionItem red-text lighten-2">
+		    <a href="#favorites" id="favoritesFilter" class="filter collection-item red-text lighten-2">
 				<div class="col s2">
 		    		<i class="materialIcons">favorite_border</i>
 		    	</div>
 		    	Favoritos
 		    </a>
-		    <a href="#popular" id="popularFilter" class="filter collectionItem red-text text-lighten-2">
+		    <a href="#popular" id="popularFilter" class="filter collection-item red-text text-lighten-2">
 		    	<div class="col s2">
 		    		<i class="materialIcons">show_chart</i>
 		    	</div>
@@ -207,16 +207,16 @@ firebase.firestore();
 		</div>
 
 		<ul class="collection">
-		  	<li class="collectionItem">
+		  	<li class="collection-item">
 			Tags
 			</li>
-			<a href="/" class="collectionItem red-text lighten-2">
+			<a href="/" class="collection-item red-text lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">attach_money</i>
 				</div>
 			Pagas
 			</a>
-			<a href="/" class="collectionItem red-text text-lighten-2">
+			<a href="/" class="collection-item red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">money_off</i>
 				</div>
@@ -225,34 +225,34 @@ firebase.firestore();
 		</ul>
 
 		<ul class="collection">
-		  	<li class="collectionItem">
+		  	<li class="collection-item">
 			Categorias
 			</li>
-			<a href="/" dataFilter="Análise" class="collectionItem categoryFilter red-text text-lighten-2">
+			<a href="/" dataFilter="Análise" class="collection-item categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">insert_chart</i>
 				</div>
 			Análise
 			</a>
-			<a href="/" dataFilter="Insights" class="collectionItem categoryFilter red-text text-lighten-2">
+			<a href="/" dataFilter="Insights" class="collection-item categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
-			<a href="/" dataFilter="Processos" class="collectionItem categoryFilter red-text text-lighten-2">
+			<a href="/" dataFilter="Processos" class="collection-item categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">settings</i>
 				</div>
 			Processos
 			</a>
-			<a href="/" dataFilter="Produtividade" class="collectionItem categoryFilter red-text text-lighten-2">
+			<a href="/" dataFilter="Produtividade" class="collection-item categoryFilter red-text text-lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
-			<a href="/" dataFilter="SEO" class="collectionItem categoryFilter red-text lighten-2">
+			<a href="/" dataFilter="SEO" class="collection-item categoryFilter red-text lighten-2">
 				<div class="col s2">
 					<i class="materialIcons">search</i>
 				</div>
