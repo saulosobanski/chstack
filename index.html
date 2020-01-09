@@ -671,7 +671,9 @@ function filterCategory() {
 	});
 }
 
+
 function getStack(context, id) {
+
 	console.log('function getStack() called. context: ' + context + ", id: " + id);
 	switch (id) {
 		case "newest":
@@ -719,8 +721,11 @@ function getStack(context, id) {
 		console.log('stack product number ' + i + ' created.');
 		}
 		console.log('all stack structures created.');
-		fillStructures(context, id);
+	createList();
 }
+
+/*
+
 function createStructures(context) {
 // manageLoader(); // Hide while loading.
 var tabId;
@@ -737,6 +742,7 @@ switch (context) {
 	break;
 	default:
 }
+
 for (var i = context.length - 1; i >= 0; i--) {
 	console.log('context length: ' + context.length);
 	console.log('current iteration: ' + i);
@@ -778,6 +784,9 @@ for (var i = context.length - 1; i >= 0; i--) {
 		console.log('calling function to fill structures.');			
 		getStack(context, tabId);
 }
+
+*/
+
 function destroyStructures(context) {
 	var TabId;
 	switch (context) {
@@ -809,7 +818,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			sId.push(doc.id);
 			console.log(`${doc.id} => ${doc.data()}`);
 			});
-			createStructures(sId);
+			getStack(sId, 'newest');
 	});
 
 });
