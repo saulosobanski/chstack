@@ -107,7 +107,7 @@ a.popularToolLove:hover {
 	border: 1px #eee solid !important;
 }
 .collection .collection-item {
-	padding: 20px 20px !important;
+	padding: 14px 20px !important;
     background-color: #fff !important;	
 }
 .collection a.collection-item {
@@ -190,22 +190,22 @@ firebase.firestore();
 
 		<div class="collection">
 		    <a href="#newest" id="newestFilter" class="filter collection-item active">
-		    	<div class="col s2">
+		    	<div class="col s3">
 		    		<i class="material-icons">schedule</i>
 		    	</div>
-		    	Novidades
+		    		Novidades
 		    </a>
 		    <a href="#favorites" id="favoritesFilter" class="filter collection-item red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 		    		<i class="material-icons">favorite_border</i>
 		    	</div>
-		    	Favoritos
+		    		Favoritos
 		    </a>
 		    <a href="#popular" id="popularFilter" class="filter collection-item red-text text-lighten-2">
-		    	<div class="col s2">
+		    	<div class="col s3">
 		    		<i class="material-icons">show_chart</i>
 		    	</div>
-		    	Populares
+		    		Populares
 		    </a>
 		</div>
 
@@ -214,13 +214,13 @@ firebase.firestore();
 			Tags
 			</li>
 			<a href="/" class="collection-item red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">attach_money</i>
 				</div>
 			Pagas
 			</a>
 			<a href="/" class="collection-item red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">money_off</i>
 				</div>
 			Gratuitas
@@ -232,31 +232,31 @@ firebase.firestore();
 			Categorias
 			</li>
 			<a href="/" data-filter="Análise" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">insert_chart</i>
 				</div>
 			Análise
 			</a>
 			<a href="/" data-filter="Insights" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">lightbulb_outline</i>
 				</div>
 			Insights
 			</a>
 			<a href="/" data-filter="Processos" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">settings</i>
 				</div>
 			Processos
 			</a>
 			<a href="/" data-filter="Produtividade" class="collection-item category-filter red-text text-lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">hourglass_empty</i>
 				</div>
 			Produtividade
 			</a>
 			<a href="/" data-filter="SEO" class="collection-item category-filter red-text lighten-2">
-				<div class="col s2">
+				<div class="col s3">
 					<i class="material-icons">search</i>
 				</div>
 			SEO
@@ -341,6 +341,7 @@ var cacheTools = [],
 	pId = [], pName = [], pDesc = [], pCat = [], pWebsite = [], pIcon = [],
 	uLikes = [], uFavorites = [],
 	instance,
+	activeFilter = '',
 	toolList;
 function prevDef(event){
 	event.preventDefault();
@@ -659,17 +660,60 @@ function fillStructures(context, id) {
 
 }
 
+function createList() {
+	var options = {
+		valueNames: [
+		'newestToolName',
+		'newestToolDescription',
+		'newestToolCategories',
+		{ name: 'url', attr: 'href' },
+		{ name: 'newestToolLove', attr: 'data-id' },
+		{ name: 'newestToolLoveId', attr: 'id' },		
+		{ name: 'newestToolIcon', attr: 'src' }
+		],
+		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>',
+		page: 10,
+		pagination: true
+	};
+
+	for (var i = cacheTools.length - 1; i >= 0; i--) {
+
+
+
+		var values = [
+	  		{ newestToolName: cacheTools[i].name,
+	  			newestToolDescription: cacheTools[i].description,
+	  			newestToolCategories: cacheTools[i].categories,
+	  			newestToolLove: cacheTools[i].id,
+	  			newestToolLoveId: 'love-' + cacheTools[i].id,
+	  			newestToolIcon: cacheTools[i].icon,
+	  			url: cacheTools[i].website
+	  		}
+		];
+
+		toolList = new List('newestList', options, values);
+	}
+}
+
+
 function filterCategory() {
 	filterQuery = this.getAttribute('data-filter');
-	toolList.filter(function(item) {
-		if (item.values()['newestToolCategories'] == filterQuery) {
-			console.log("true");
-			return true;
-		} else {
-			console.log("false");
-			return false;
-		}
-	});
+
+	if (activeFilter == filterQuery) {
+		toolList.filter();
+	} else {
+
+		activeFilter = filterQuery;
+		toolList.filter(function(item) {
+			if (item.values()['newestToolCategories'] == filterQuery) {
+				console.log("true");
+				return true;
+			} else {
+				console.log("false");
+				return false;
+			}
+		});
+	}
 }
 
 
@@ -724,8 +768,17 @@ function getStack(context, id) {
 			console.log('stack product number ' + i + ' created.');
 		}
 
-		createList();
-		console.log('all stack structures created.');
+		console.log('all stack structures created. calling createList().');
+
+		if (cacheTools.length != 0) {
+			console.log(cacheTools);
+			createList();
+		} else {
+			console.log('cacheTools is empty. Trying again in 0.5sec');
+			setTimeout(function() {
+				createList();
+		}, 500);
+	}
 }
 
 /*
@@ -832,40 +885,4 @@ window.addEventListener('DOMContentLoaded', function() {
 </body>
 <!--Compiled and minified JavaScript at end of body for optimized loading-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<script>
-
-function createList() {
-	var options = {
-		valueNames: [
-		'newestToolName',
-		'newestToolDescription',
-		'newestToolCategories',
-		{ name: 'url', attr: 'href' },
-		{ name: 'newestToolLove', attr: 'data-id' },
-		{ name: 'newestToolLoveId', attr: 'id' },		
-		{ name: 'newestToolIcon', attr: 'src' }
-		],
-		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>'
-	};
-
-	for (var i = cacheTools.length - 1; i >= 0; i--) {
-
-		var values = [
-	  		{ newestToolName: cacheTools[i].name,
-	  			newestToolDescription: cacheTools[i].description,
-	  			newestToolCategories: cacheTools[i].categories,
-	  			newestToolLove: cacheTools[i].id,
-	  			newestToolLoveId: 'love-' + cacheTools[i].id,
-	  			newestToolIcon: cacheTools[i].icon,
-	  			url: cacheTools[i].website
-	  		}
-		];
-
-		toolList = new List('newestList', options, values);
-	}
-}
-
-</script>
-
 </html>
