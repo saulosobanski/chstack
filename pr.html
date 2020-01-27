@@ -676,12 +676,13 @@ function createList() {
 		pagination: true
 	};
 
+	toolList = new List('newestList', options);
+
 	for (var i = cacheTools.length - 1; i >= 0; i--) {
 
-
-
-		var values = [
-	  		{ newestToolName: cacheTools[i].name,
+		toolList.add(
+	  		{
+	  			newestToolName: cacheTools[i].name,
 	  			newestToolDescription: cacheTools[i].description,
 	  			newestToolCategories: cacheTools[i].categories,
 	  			newestToolLove: cacheTools[i].id,
@@ -689,9 +690,7 @@ function createList() {
 	  			newestToolIcon: cacheTools[i].icon,
 	  			url: cacheTools[i].website
 	  		}
-		];
-
-		toolList = new List('newestList', options, values);
+		);
 	}
 }
 
