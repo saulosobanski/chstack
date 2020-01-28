@@ -199,12 +199,14 @@ firebase.firestore();
 		    		<i class="material-icons">favorite_border</i>
 		    	</div>
 		    		Favoritos
+		    	<span class="new badge grey lighten-1" data-badge-caption="Em Breve"></span>
 		    </a>
 		    <a href="#popular" id="popularFilter" class="filter collection-item red-text text-lighten-2">
 		    	<div class="col s3">
 		    		<i class="material-icons">show_chart</i>
 		    	</div>
 		    		Populares
+		    	<span class="new badge grey lighten-1" data-badge-caption="Em Breve"></span>	
 		    </a>
 		</div>
 
@@ -217,12 +219,14 @@ firebase.firestore();
 					<i class="material-icons">attach_money</i>
 				</div>
 			Pagas
+			<span class="new badge grey lighten-1" data-badge-caption="Em Breve"></span>
 			</a>
 			<a href="/" class="collection-item red-text text-lighten-2">
 				<div class="col s3">
 					<i class="material-icons">money_off</i>
 				</div>
 			Gratuitas
+			<span class="new badge grey lighten-1" data-badge-caption="Em Breve"></span>
 			</a>
 		</ul>
 
@@ -388,7 +392,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		M.toast({html: 'Usuário conectado com sucesso.', classes: 'white blue-text lighten-2'})
 		getId('userImage').src = getProfilePicUrl();
 		getId('user-name').innerText = getUserName();
-		getId('favoritesFilter').addEventListener('click', loadFavorites);
+//		getId('favoritesFilter').addEventListener('click', loadFavorites);
 		getId('newestFilter').addEventListener('click', loadNewest);
 //		getId('logoutIcon').classList.toggle('hidden');
 //		getId('logoutIcon').addEventListener('click', signOut);
@@ -671,7 +675,7 @@ function createList() {
 		{ name: 'newestToolIcon', attr: 'src' }
 		],
 		item: '<li class="valign-wrapper"><div class="col l3 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l6 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>', 
-		page: 10,
+		page: 12,
 		pagination: true
 	};
 
