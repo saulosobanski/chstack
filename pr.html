@@ -156,13 +156,13 @@ firebase.database();
 firebase.firestore();
 </script>
 
-<div class="container">
+<div>
 	<nav class="row">
 		<div class="nav-wrapper grey lighten-5 valign-wrapper">
-			<div class="col s8">
+			<div class="col s9">
 				<h4 class="grey-text text-darken-4">Content Marketing Stack</h4>
 			</div>
-			<div class="col s4">
+			<div class="col s3">
 				<ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
 					<div class="chip">
 						<img id="userImage" src="https://pipz.io/shared/112/files/chs_google_icon.png" alt="Contact Person">
@@ -186,7 +186,7 @@ firebase.firestore();
 
 <div class="row">
 
-	<div class="col s4">
+	<div class="col s3">
 
 		<div class="collection">
 		    <a href="#newest" id="newestFilter" class="filter collection-item active">
@@ -265,7 +265,7 @@ firebase.firestore();
 		
 	</div>
 
-	<div class="col s8">
+	<div class="col s9">
 	<!-- ul class="tabs tabs-fixed-width grey lighten-5">
 		<li id="newest-tab" class="tab col s3"><a class="grey-text" href="#newest">Recentes</a></li>
 		<li id="favorites-tab" class="tab col s3 disabled"><a class="grey-text" href="#favorites">Favoritos</a></li>
@@ -671,7 +671,7 @@ function createList() {
 		{ name: 'newestToolLoveId', attr: 'id' },		
 		{ name: 'newestToolIcon', attr: 'src' }
 		],
-		item: '<li class="valign-wrapper"><div class="col l4 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l5 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>',
+		item: '<li class="valign-wrapper"><div class="col l3 s6 valign-wrapper"><img class="left newestToolIcon" src=""><a class="newestToolName url" href=""></a></div><div class="col l6 hide-on-small-only"><p class="newestToolDescription truncate"></p></div><div class="col l2 s4"><p class="newestToolCategories"></p></div><div class="col l1 s2 center-align"><a class="newestToolLove" data-id="" id=""><i class="material-icons">favorite_border</i></a></div></li>', 
 		page: 10,
 		pagination: true
 	};
@@ -698,8 +698,19 @@ function createList() {
 function filterCategory() {
 	filterQuery = this.getAttribute('data-filter');
 
+	// Activate visual feedback for filters
+	for (var i = document.getElementsByClassName('category-filter').length - 1; i >= 0; i--) {
+		if (document.getElementsByClassName('category-filter')[i].getAttribute('data-filter').indexOf(filterQuery) !== -1) {
+			document.getElementsByClassName('category-filter')[i].classList.toggle('active');
+		} else {
+			document.getElementsByClassName('category-filter')[i].classList.remove('active');				
+		}
+	};
+
 	if (activeFilter == filterQuery) {
 		toolList.filter();
+		activeFilter = '';
+
 	} else {
 
 		activeFilter = filterQuery;
